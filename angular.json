@@ -31,8 +31,7 @@
               "src/styles.scss"
             ],
             "scripts": [
-              "src/assets/js/FileSaver.js",
-              "src/assets/js/test.js"
+              "src/assets/js/FileSaver.js"
             ]
           },
           "configurations": {

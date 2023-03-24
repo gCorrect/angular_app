@@ -6,7 +6,6 @@ import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 // models
 import { EmailInfo, MailType } from '../../models/emailInfo.model';
 // services
-import '../../../assets/js/test.js';
 import { EmailInfoService } from '../../services/email-info.service';
 
 declare var saveAs: any;
