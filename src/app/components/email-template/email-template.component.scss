@@ -1,8 +1,3 @@
-.container {
-  // align-self: flex-b !important;
-  // align-self: first baseline !important;
-  // margin-left: -3em;
-}
 label {
   font-weight: bold;
   font-size: 1.2em;
@@ -14,7 +9,7 @@ label {
 .texts {
   display: flex;
 }
-#submit {
+#save {
   text-align: center;
   button {
     margin: 2em 1em;

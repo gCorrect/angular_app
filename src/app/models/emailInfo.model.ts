@@ -1,9 +1,9 @@
 export enum MailType {
-  CONFIRM = 1,
-  CANCEL,
-  REMINDER,
-  DEPOSIT,
-  CARDDETAILS,
+  CONFIRM = "confirm",
+  CANCEL = "cancel",
+  REMINDER = "reminder",
+  DEPOSIT = "deposit",
+  CARDDETAILS = "card_details",
 }
 
 export interface EmailInfo {

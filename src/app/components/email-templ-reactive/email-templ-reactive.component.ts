@@ -1,11 +1,11 @@
 //@angular
-import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
+import { Component } from '@angular/core';
 import { FormControl } from '@angular/forms';
 //external
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 // models
-import { EmailInfo } from '../../models/emailInfo.model';
+import { EmailInfo, MailType } from '../../models/emailInfo.model';
 // services
 import { EmailInfoService } from '../../services/email-info.service';
 
@@ -28,12 +28,12 @@ export class EmailTemplReactiveComponent {
   constructor(
     private emailInfoService: EmailInfoService,
     private location: Location
-  ) {}
+  ) { }
 
   emailInfo: EmailInfo = {
     logo: '',
     image: '',
-    mailType: 1,
+    mailType: MailType.CONFIRM,
     title: '',
     text: '',
     titleGr: '',

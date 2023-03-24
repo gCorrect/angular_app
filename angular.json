@@ -30,7 +30,10 @@
             "styles": [
               "src/styles.scss"
             ],
-            "scripts": []
+            "scripts": [
+              "src/assets/js/FileSaver.js",
+              "src/assets/js/test.js"
+            ]
           },
           "configurations": {
             "production": {

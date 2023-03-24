@@ -17,6 +17,7 @@ import { EmailTemplateComponent } from './components/email-template/email-templa
 import { EmailTemplReactiveComponent } from './components/email-templ-reactive/email-templ-reactive.component';
 // services
 import { UsersService } from './services/users.service';
+import { PreviewComponent } from './preview/preview.component';
 
 @NgModule({
   imports: [
@@ -35,6 +36,7 @@ import { UsersService } from './services/users.service';
     UserEditComponent,
     EmailTemplateComponent,
     EmailTemplReactiveComponent,
+    PreviewComponent,
   ],
   providers: [UsersService],
   bootstrap: [AppComponent],
