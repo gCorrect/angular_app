@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -7,4 +6,10 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'test-project-anastasiou';
+
+  encodedExampleHtml: string = '';
+
+  constructor() {
+    // this.encodedExampleHtml = getAnnotation(PreviewComponent).template;
+  }
 }

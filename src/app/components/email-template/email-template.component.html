@@ -54,17 +54,11 @@
   <div class="texts form-group">
     <div class="col-6" style="margin-right: 1em">
       <label for="text">Text: </label>
-      <ckeditor
-                [editor]="Editor"
-                [(ngModel)]="emailInfo.text"
-                data="<p>Hello, world!</p>"></ckeditor>
+      <ckeditor [editor]="Editor" [(ngModel)]="emailInfo.text"> </ckeditor>
     </div>
     <div>
       <label for="textGr">Text Greek: </label>
-      <ckeditor
-                [editor]="Editor"
-                [(ngModel)]="emailInfo.textGr"
-                data="<p>Hello, world!</p>"></ckeditor>
+      <ckeditor [editor]="Editor" [(ngModel)]="emailInfo.textGr" (click)="updatePreviewTemplate()"> </ckeditor>
     </div>
   </div>
   <!-- === Buttons: submit, preview, previewGr === -->
@@ -72,20 +66,25 @@
     <button type="button" class="btn btn-primary" (click)="updatePreviewTemplate(); downloadTemplate() ">
       Save (.html)
     </button>
-    <button type="button" class="btn btn-warning" (click)="preview(); updatePreviewTemplate()">
+    <button type="button" class="btn btn-warning" (click)="setToEnglish(); updatePreviewTemplate()">
       Preview <span *ngIf="isEnglish">(ON)</span>
     </button>
-    <button type="button" class="btn btn-warning" (click)="previewGr(); updatePreviewTemplate() ">
+    <button type="button" class="btn btn-warning" (click)="setToGreek(); updatePreviewTemplate() ">
       Προεπισκόπηση <span *ngIf="isGreek">(ON)</span>
     </button>
   </div>
 
+  component method
   <div class="preview">
     <preview *ngIf="isEnglish" [LOGO]="emailInfo.logo" [IMAGE]="emailInfo.image" [TITLE]="emailInfo.title" [TEXT]="emailInfo.text"></preview>
     <preview *ngIf="isGreek" [LOGO]="emailInfo.logo" [IMAGE]="emailInfo.image" [TITLE]="emailInfo.titleGr" [TEXT]="emailInfo.textGr"></preview>
   </div>
+  {{encodedExampleHtml}}
 </div>
 
-<!-- <div class="preview">
-  <div class="container" [innerHtml]="previewTemplate"> </div>
-</div> -->
+<!-- ================= -->
+<!-- innerHTML method-->
+<!-- <div [innerHTML]="sanitizer.bypassSecurityTrustHtml(previewTemplate)"></div> -->
+
+<!-- adjacentHTML method-->
+<!-- <div #preview class="preview"></div> -->
