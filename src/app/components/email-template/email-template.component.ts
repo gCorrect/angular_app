@@ -1,5 +1,4 @@
 //@angular
-import { Location } from '@angular/common';
 import { Component, ElementRef, Renderer2, ViewChild, ViewContainerRef } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 // import { getAnnotation } from '../preview/annotation';
@@ -46,11 +45,9 @@ export class EmailTemplateComponent {
   // Functions
   constructor(
     private emailInfoService: EmailInfoService,
-    private location: Location,
     private renderer: Renderer2,
     public sanitizer: DomSanitizer,
     private viewContainerRef: ViewContainerRef,
-    // @Inject(DOCUMENT) document: Document
   ) {
     // this.encodedExampleHtml = getAnnotation(PreviewComponent).template;
 
@@ -206,15 +203,6 @@ export class EmailTemplateComponent {
     </div>
     `;
     this.previewTemplate = previewTemplate;
-    const d2 = this.renderer.createElement('div');
-    // const text = this.renderer.createText("sdfsfdsdfsdfdsf");
-    // this.d1.nativeElement.append(this.previewTemplate);
-    // d2.append("p");
-    // this.d1.nativeElement.appendChild(d2);
-    // this.d1.nativeElement.insertAdjacentHTML('beforeend', this.previewTemplate);
-    // const text = this.renderer.createText(this.previewTemplate);
-    // this.renderer.appendChild(d2, text);
-    // this.renderer.appendChild(this.d1.nativeElement, d2);
   } //updatePreviewTemplate() End
 
   downloadTemplate() {
@@ -226,6 +214,15 @@ export class EmailTemplateComponent {
 } // EmailTemplateComponent End
 
 // ===============================================
+    // const d2 = this.renderer.createElement('div');
+    // this.d1.nativeElement.append(this.previewTemplate);
+    // d2.append("p");
+    // this.d1.nativeElement.appendChild(d2);
+    // this.d1.nativeElement.insertAdjacentHTML('beforeend', this.previewTemplate);
+    // const text = this.renderer.createText(this.previewTemplate);
+    // this.renderer.appendChild(d2, text);
+    // this.renderer.appendChild(this.d1.nativeElement, d2);
+
 // getComponentTemplate(componentType: any): any {
 
 //   // Create a new instance of the component and attach it to the ViewContainerRef
@@ -236,7 +233,6 @@ export class EmailTemplateComponent {
 
 //   // Destroy the component instance
 //   componentRef.destroy();
-
 
 //   // Return the template code
 //   return template;
