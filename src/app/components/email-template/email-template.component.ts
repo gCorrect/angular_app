@@ -213,7 +213,7 @@ export class EmailTemplateComponent {
 
 } // EmailTemplateComponent End
 
-// ===============================================
+// =================NOTES==========================
     // const d2 = this.renderer.createElement('div');
     // this.d1.nativeElement.append(this.previewTemplate);
     // d2.append("p");
