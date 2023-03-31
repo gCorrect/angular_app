@@ -71,8 +71,12 @@ font-family: serif;">powered by</span>
     <u>Image</u>: <br />
     {{ IMAGE }} <br />
   </div>
+  <div *ngIf="TITLE!= ''">
   <u>Title</u>: <br />
   {{ TITLE }}
+  </div>
+  <div *ngIf="TEXT!= ''">
   <u>Text</u>: <br />
   {{ TEXT }}
+  </div>
 </div>
