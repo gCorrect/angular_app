@@ -3,24 +3,27 @@
   <div class="form-group col-6">
     <label for="logo">Logo: </label>
     <input
-           type="text"
-           class="form-control"
-           [(ngModel)]="emailInfo.logo"
-           placeholder="Logo" />
+      type="text"
+      class="form-control"
+      [(ngModel)]="emailInfo.logo"
+      placeholder="Logo"
+    />
     <label for="image">Image: </label>
     <input
-           type="text"
-           class="form-control"
-           [(ngModel)]="emailInfo.image"
-           placeholder="Image" />
+      type="text"
+      class="form-control"
+      [(ngModel)]="emailInfo.image"
+      placeholder="Image"
+    />
 
     <label for="mail_type">Mail Type: </label>
     <select
-            id="mail_type"
-            class="form-select"
-            [(ngModel)]="emailInfo.mailType"
-            (change)="titleValues()"
-            required>
+      id="mail_type"
+      class="form-select"
+      [(ngModel)]="emailInfo.mailType"
+      (change)="titleValues()"
+      required
+    >
       <option value="confirm">Confirm</option>
       <option value="cancel">Cancel</option>
       <option value="reminder">Reminder</option>
@@ -33,21 +36,23 @@
     <div class="col-6" style="margin-right: 1em">
       <label for="title">Title: </label>
       <input
-             type="text"
-             class="form-control"
-             [(ngModel)]="emailInfo.title"
-             [value]="emailInfo.title"
-             required />
+        type="text"
+        class="form-control"
+        [(ngModel)]="emailInfo.title"
+        [value]="emailInfo.title"
+        required
+      />
     </div>
 
     <div class="col-6">
       <label for="title_greek">Title Greek: </label>
       <input
-             type="text"
-             class="form-control"
-             [(ngModel)]="emailInfo.titleGr"
-             [value]="emailInfo.titleGr"
-             required />
+        type="text"
+        class="form-control"
+        [(ngModel)]="emailInfo.titleGr"
+        [value]="emailInfo.titleGr"
+        required
+      />
     </div>
   </div>
   <!--=== texts ===-->
@@ -58,26 +63,57 @@
     </div>
     <div>
       <label for="textGr">Text Greek: </label>
-      <ckeditor [editor]="Editor" [(ngModel)]="emailInfo.textGr" (click)="updatePreviewTemplate()"> </ckeditor>
+      <ckeditor
+        [editor]="Editor"
+        [(ngModel)]="emailInfo.textGr"
+        (click)="updatePreviewTemplate()"
+      >
+      </ckeditor>
     </div>
   </div>
   <!-- === Buttons: submit, preview, previewGr === -->
   <div id="save">
-    <button type="button" class="btn btn-primary" (click)="updatePreviewTemplate(); downloadTemplate() ">
+    <button
+      type="button"
+      class="btn btn-primary"
+      (click)="updatePreviewTemplate(); downloadTemplate()"
+    >
       Save (.html)
     </button>
-    <button type="button" class="btn btn-warning" (click)="setToEnglish(); updatePreviewTemplate()">
+    <button
+      type="button"
+      class="btn btn-warning"
+      (click)="setToEnglish(); updatePreviewTemplate()"
+    >
       Preview <span *ngIf="isEnglish">(ON)</span>
     </button>
-    <button type="button" class="btn btn-warning" (click)="setToGreek(); updatePreviewTemplate() ">
+    <button
+      type="button"
+      class="btn btn-warning"
+      (click)="setToGreek(); updatePreviewTemplate()"
+    >
       Προεπισκόπηση <span *ngIf="isGreek">(ON)</span>
     </button>
   </div>
 
   component method
   <div class="preview">
-    <preview *ngIf="isEnglish" [LOGO]="emailInfo.logo" [IMAGE]="emailInfo.image" [TITLE]="emailInfo.title" [TEXT]="emailInfo.text"></preview>
-    <preview *ngIf="isGreek" [LOGO]="emailInfo.logo" [IMAGE]="emailInfo.image" [TITLE]="emailInfo.titleGr" [TEXT]="emailInfo.textGr"></preview>
+    <preview
+      *ngIf="isEnglish"
+      [LOGO]="emailInfo.logo"
+      [IMAGE]="emailInfo.image"
+      [mailType]="emailInfo.mailType"
+      [TITLE]="emailInfo.title"
+      [TEXT]="emailInfo.text"
+    ></preview>
+    <preview
+      *ngIf="isGreek"
+      [LOGO]="emailInfo.logo"
+      [IMAGE]="emailInfo.image"
+      [mailType]="emailInfo.mailType"
+      [TITLE]="emailInfo.titleGr"
+      [TEXT]="emailInfo.textGr"
+    ></preview>
   </div>
   <!-- {{encodedExampleHtml}} -->
 </div>
