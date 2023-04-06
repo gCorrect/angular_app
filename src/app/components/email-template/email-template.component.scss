@@ -17,7 +17,7 @@ label {
 }
 :host ::ng-deep .ck-editor__editable_inline {
   min-height: 600px !important;
-  // width: 100% !important;
+  // min-width: 630px !important;
 }
 .preview {
   text-align: center;

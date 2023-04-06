@@ -6,13 +6,16 @@
       type="text"
       class="form-control"
       [(ngModel)]="emailInfo.logo"
+      (change)="updatePreviewTemplate()"
       placeholder="Logo"
-    />
+
+      />
     <label for="image">Image: </label>
     <input
       type="text"
       class="form-control"
       [(ngModel)]="emailInfo.image"
+      (change)="updatePreviewTemplate()"
       placeholder="Image"
     />
 
@@ -21,7 +24,7 @@
       id="mail_type"
       class="form-select"
       [(ngModel)]="emailInfo.mailType"
-      (change)="titleValues()"
+      (change)="titleValues(); updatePreviewTemplate()"
       required
     >
       <option value="confirm">Confirm</option>
@@ -40,6 +43,7 @@
         class="form-control"
         [(ngModel)]="emailInfo.title"
         [value]="emailInfo.title"
+        (change)="updatePreviewTemplate()"
         required
       />
     </div>
@@ -51,6 +55,7 @@
         class="form-control"
         [(ngModel)]="emailInfo.titleGr"
         [value]="emailInfo.titleGr"
+        (change)="updatePreviewTemplate()"
         required
       />
     </div>
@@ -60,14 +65,15 @@
     <!-- <textarea ckeditor="editorOptions" ng-model="content_two"></textarea> -->
     <div class="col-6" style="margin-right: 1em">
       <label for="text">Text: </label>
-      <ckeditor [editor]="Editor" [(ngModel)]="emailInfo.text"> {{emailInfo.text}}</ckeditor>
+
+      <ckeditor [editor]="Editor" [(ngModel)]="emailInfo.text" (change)="updatePreviewTemplate()"> {{emailInfo.text}}</ckeditor>
     </div>
     <div>
       <label for="textGr">Text Greek: </label>
       <ckeditor
         [editor]="Editor"
         [(ngModel)]="emailInfo.textGr"
-        (click)="updatePreviewTemplate()"
+        (change)="updatePreviewTemplate()"
       >
       </ckeditor>
     </div>
@@ -97,31 +103,33 @@
     </button>
   </div>
 
-  component method
-  <div class="preview">
-    <preview
-      *ngIf="isEnglish"
+  <!-- === Preview === -->
+  <div style= "margin-bottom: 2em;" [innerHTML]="sanitizer.bypassSecurityTrustHtml(previewTemplate)"></div>
+</div> <!-- container -->
+
+<!-- ================= -->
+
+<!-- component method -->
+<!-- <div class="preview">
+  <preview
+  *ngIf="isEnglish"
       [LOGO]="emailInfo.logo"
       [IMAGE]="emailInfo.image"
       [mailType]="emailInfo.mailType"
       [TITLE]="emailInfo.title"
       [TEXT]="emailInfo.text"
-    ></preview>
-    <preview
+      ></preview>
+      <preview
       *ngIf="isGreek"
       [LOGO]="emailInfo.logo"
       [IMAGE]="emailInfo.image"
       [mailType]="emailInfo.mailType"
       [TITLE]="emailInfo.titleGr"
       [TEXT]="emailInfo.textGr"
-    ></preview>
-  </div>
-  <!-- {{encodedExampleHtml}} -->
-</div>
+      ></preview>
+    </div> -->
 
-<!-- ================= -->
-<!-- innerHTML method-->
-<!-- <div [innerHTML]="sanitizer.bypassSecurityTrustHtml(previewTemplate)"></div> -->
+    <!-- adjacentHTML method-->
+    <!-- <div #preview class="preview"></div> -->
 
-<!-- adjacentHTML method-->
-<!-- <div #preview class="preview"></div> -->
+    <!-- {{encodedExampleHtml}} -->

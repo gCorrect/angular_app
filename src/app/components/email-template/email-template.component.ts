@@ -1,5 +1,5 @@
 //@angular
-import { Component, ElementRef, Renderer2, ViewChild, ViewContainerRef } from '@angular/core';
+import { Component, ElementRef, Renderer2, ViewChild, ViewContainerRef, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 // import { getAnnotation } from '../preview/annotation';
 //external
@@ -16,7 +16,7 @@ declare var saveAs: any;
   styleUrls: ['./email-template.component.scss'],
   // encapsulation: ViewEncapsulation.None,
 })
-export class EmailTemplateComponent {
+export class EmailTemplateComponent implements OnInit {
   // Variables
   public Editor: any = ClassicEditor;
 
@@ -37,11 +37,13 @@ export class EmailTemplateComponent {
   isGreek: boolean = true;
 
   previewTemplate = '';
+
   previewComp = document.getElementById("preview");
 
   @ViewChild('preview') d1: ElementRef<HTMLInputElement> = {} as ElementRef;
 
   encodedExampleHtml: string = 'encodedExampleHtml';
+
   // Functions
   constructor(
     private emailInfoService: EmailInfoService,
@@ -53,101 +55,99 @@ export class EmailTemplateComponent {
 
   }
 
+  ngOnInit(): void {
+    this.updatePreviewTemplate();
+  }
   titleValues(): void {
     let mailType = this.emailInfo.mailType;
 
     // switch
-    // switch (mailType) {
-    //   case MailType.CONFIRM: {
-    //     this.emailInfo.title = 'Reservation Confirmation';
-    //     this.emailInfo.titleGr = 'Επιβεβαίωση Κράτησης';
-    //     break;
-    //   }
-    //   case MailType.CANCEL: {
-    //     this.emailInfo.title = 'Reservation Cancellation';
-    //     this.emailInfo.titleGr = 'Ακύρωση Κράτησης';
-    //     break;
-    //   }
-    //   case MailType.REMINDER: {
-    //     this.emailInfo.title = 'Reservation Reminder';
-    //     this.emailInfo.titleGr = 'Υπενθύμιση Κράτησης';
-    //     break;
-    //   }
-    //   case MailType.DEPOSIT: {
-    //     this.emailInfo.title = 'Payment Request';
-    //     this.emailInfo.titleGr = 'Αίτημα Πληρωμής';
-    //     break;
-    //   }
-    //   case MailType.CARDDETAILS: {
-    //     this.emailInfo.title = 'Credit Card Details Request';
-    //     this.emailInfo.titleGr = 'Αίτημα Καταχώρησης Κάρτας';
-    //     break;
-    //   }
-    //   // default: {
-    //   //   this.emailInfo.title = 'Reservation Confirmation';
-    //   //   this.emailInfo.titleGr = 'Επιβεβαίωση Κράτησης';
-    //   //   console.log("mailType " + mailType)
-    //   //   console.log("mailType def " + MailType.CONFIRM)
-    //   //   break;
-    //   // }
-    // }
-
-    if (mailType == MailType.CONFIRM) {
-      this.emailInfo.title = 'Reservation Confirmation';
-      this.emailInfo.titleGr = 'Επιβεβαίωση Κράτησης';
-    } else if (mailType == MailType.CANCEL) {
-      this.emailInfo.title = 'Reservation Cancellation';
-      this.emailInfo.titleGr = 'Ακύρωση Κράτησης';
-    } else if (mailType == MailType.REMINDER) {
-      this.emailInfo.title = 'Reservation Reminder';
-      this.emailInfo.titleGr = 'Υπενθύμιση Κράτησης';
-    } else if (mailType == MailType.DEPOSIT) {
-      this.emailInfo.title = 'Payment Request';
-      this.emailInfo.titleGr = 'Αίτημα Πληρωμής';
-    } else if (mailType == MailType.CARDDETAILS) {
-      this.emailInfo.title = 'Credit Card Details Request';
-      this.emailInfo.titleGr = 'Αίτημα Καταχώρησης Κάρτας';
+    switch (mailType) {
+      case MailType.CONFIRM: {
+        this.emailInfo.title = 'Reservation Confirmation';
+        this.emailInfo.titleGr = 'Επιβεβαίωση Κράτησης';
+        break;
+      }
+      case MailType.CANCEL: {
+        this.emailInfo.title = 'Reservation Cancellation';
+        this.emailInfo.titleGr = 'Ακύρωση Κράτησης';
+        break;
+      }
+      case MailType.REMINDER: {
+        this.emailInfo.title = 'Reservation Reminder';
+        this.emailInfo.titleGr = 'Υπενθύμιση Κράτησης';
+        break;
+      }
+      case MailType.DEPOSIT: {
+        this.emailInfo.title = 'Payment Request';
+        this.emailInfo.titleGr = 'Αίτημα Πληρωμής';
+        break;
+      }
+      case MailType.CARDDETAILS: {
+        this.emailInfo.title = 'Credit Card Details Request';
+        this.emailInfo.titleGr = 'Αίτημα Καταχώρησης Κάρτας';
+        break;
+      }
+      default: {
+        this.emailInfo.title = 'Reservation Confirmation';
+        this.emailInfo.titleGr = 'Επιβεβαίωση Κράτησης';
+        console.log("mailType " + mailType)
+        console.log("mailType def " + MailType.CONFIRM)
+        break;
+      }
     }
+
+    // if (mailType == MailType.CONFIRM) {
+    //   this.emailInfo.title = 'Reservation Confirmation';
+    //   this.emailInfo.titleGr = 'Επιβεβαίωση Κράτησης';
+    // } else if (mailType == MailType.CANCEL) {
+    //   this.emailInfo.title = 'Reservation Cancellation';
+    //   this.emailInfo.titleGr = 'Ακύρωση Κράτησης';
+    // } else if (mailType == MailType.REMINDER) {
+    //   this.emailInfo.title = 'Reservation Reminder';
+    //   this.emailInfo.titleGr = 'Υπενθύμιση Κράτησης';
+    // } else if (mailType == MailType.DEPOSIT) {
+    //   this.emailInfo.title = 'Payment Request';
+    //   this.emailInfo.titleGr = 'Αίτημα Πληρωμής';
+    // } else if (mailType == MailType.CARDDETAILS) {
+    //   this.emailInfo.title = 'Credit Card Details Request';
+    //   this.emailInfo.titleGr = 'Αίτημα Καταχώρησης Κάρτας';
+    // }
   } // titleValues() End
 
   setToEnglish() {
     this.isGreek = false;
-    this.isEnglish = this.toggle(this.isEnglish);
+    this.isEnglish = !this.isEnglish;
   } // setToEnglish() End
 
   setToGreek() {
     this.isEnglish = false;
-    this.isGreek = this.toggle(this.isGreek);
+    this.isGreek = !this.isGreek;
   } // setToGreek() End
 
-  toggle(boolVar: boolean): boolean {
-    boolVar == false ? (boolVar = true) : (boolVar = false);
-    return boolVar;
-  } // toggle() End
-
   updatePreviewTemplate() {
-    let LOGO = this.emailInfo.logo;
-    let IMAGE = this.emailInfo.image;
-    let TITLE: string | undefined;
-    let TEXT: string | undefined;
+    let logo = this.emailInfo.logo;
+    let image = this.emailInfo.image;
+    let title: string | undefined;
+    let text: string | undefined;
 
     if (this.isEnglish) {
-      TITLE = this.emailInfo.title;
-      TEXT = this.emailInfo.text;
+      title = this.emailInfo.title;
+      text = this.emailInfo.text;
     } else {
-      TITLE = this.emailInfo.titleGr;
-      TEXT = this.emailInfo.textGr;
+      title = this.emailInfo.titleGr;
+      text = this.emailInfo.textGr;
     }
     let previewTemplate = `  <!-- Background -->
-    <div style="font-family: sans-serif; background-color: #dbdbdb;padding: 15px; color: #303030">
+    <div style="font-family: sans-serif!important; background-color: #dbdbdb;padding: 15px; color: #303030">
       <!-- Content Container -->
       <div
            style="box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);background-color: white; width: 660px; max-width: 95%; margin: 15px auto; border-radius: 5px;padding: 15px; line-height: 24px;">
 
-        <img *ngIf="${LOGO}" style="max-width: 50%; max-height: 100px; margin: 10px auto; display: block;" src="${LOGO}">
+        <img *ngIf="${logo}" style="max-width: 50%; max-height: 100px; margin: 10px auto; display: block;" src="${logo}">
 
         <!-- Image -->
-        <img *ngIf="${IMAGE}" style="max-height: 260px;
+        <img *ngIf="${image}" style="max-height: 260px;
       max-width: 100%;
       object-fit: contain;
       object-position: center;
@@ -156,14 +156,14 @@ export class EmailTemplateComponent {
       border-radius: 5px;
       margin: 0 auto;
       display: block;
-      margin-bottom: 25px;" src="${IMAGE}">
+      margin-bottom: 25px;" src="${image}">
 
 
         <!-- Heading -->
         <h1 style="text-align: center; font-size: 20px;text-align: center;
     font-size: 25px;
     border-bottom: 2px dashed #ccc;
-    padding-bottom: 15px;">${TITLE}</h1>
+    padding-bottom: 15px;">${title}</h1>
 
 
         <!-- Text -->
@@ -172,7 +172,7 @@ export class EmailTemplateComponent {
 
           <!-- CONTENT START -->
 
-          ${TEXT}
+          ${text}
 
           <!-- CONTENT END -->
 
