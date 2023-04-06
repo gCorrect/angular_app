@@ -113,12 +113,12 @@ export class EmailTemplateComponent {
   setToEnglish() {
     this.isGreek = false;
     this.isEnglish = this.toggle(this.isEnglish);
-  } // preview() End
+  } // setToEnglish() End
 
   setToGreek() {
     this.isEnglish = false;
     this.isGreek = this.toggle(this.isGreek);
-  } // previewGr() End
+  } // setToGreek() End
 
   toggle(boolVar: boolean): boolean {
     boolVar == false ? (boolVar = true) : (boolVar = false);

@@ -52,9 +52,10 @@
   </div>
   <!--=== texts ===-->
   <div class="texts form-group">
+    <!-- <textarea ckeditor="editorOptions" ng-model="content_two"></textarea> -->
     <div class="col-6" style="margin-right: 1em">
       <label for="text">Text: </label>
-      <ckeditor [editor]="Editor" [(ngModel)]="emailInfo.text"> </ckeditor>
+      <ckeditor [editor]="Editor" [(ngModel)]="emailInfo.text"> {{emailInfo.text}}</ckeditor>
     </div>
     <div>
       <label for="textGr">Text Greek: </label>
