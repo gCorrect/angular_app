@@ -18,6 +18,7 @@ import { UsersListComponent } from './components/users-list/users-list.component
 // services
 import { PreviewComponent } from './components/preview/preview.component';
 import { UsersService } from './services/users.service';
+import { LandingPageConverterComponent } from './components/landing-page-converter/landing-page-converter.component';
 
 @NgModule({
   imports: [
@@ -37,6 +38,7 @@ import { UsersService } from './services/users.service';
     EmailTemplateComponent,
     EmailTemplReactiveComponent,
     PreviewComponent,
+    LandingPageConverterComponent,
   ],
   providers: [UsersService],
   bootstrap: [AppComponent],

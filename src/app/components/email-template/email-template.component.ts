@@ -1,5 +1,5 @@
 //@angular
-import { Component, ElementRef, Renderer2, ViewChild, ViewContainerRef, OnInit } from '@angular/core';
+import { Component, Renderer2, ViewContainerRef, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 // import { getAnnotation } from '../preview/annotation';
 //external
