@@ -14,4 +14,7 @@ export interface EmailInfo {
   text?: string;
   titleGr?: string;
   textGr?: string;
+  noReply?: string;
+  noReplyGr?: string;
 }
+

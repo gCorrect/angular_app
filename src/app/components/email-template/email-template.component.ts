@@ -28,6 +28,8 @@ export class EmailTemplateComponent implements OnInit {
     text: '',
     titleGr: 'Επιβεβαίωση Κράτησης',
     textGr: '',
+    noReply: 'Please do not directly reply to this email address ("No-Reply")',
+    noReplyGr: 'Παρακαλώ μην απαντήσετε σε αυτό το email ("No-Reply")',
   };
 
   titleValue: string = '';
@@ -39,10 +41,6 @@ export class EmailTemplateComponent implements OnInit {
   previewTemplate = '';
 
   previewComp = document.getElementById("preview");
-
-  @ViewChild('preview') d1: ElementRef<HTMLInputElement> = {} as ElementRef;
-
-  encodedExampleHtml: string = 'encodedExampleHtml';
 
   // Functions
   constructor(
@@ -130,14 +128,22 @@ export class EmailTemplateComponent implements OnInit {
     let image = this.emailInfo.image;
     let title: string | undefined;
     let text: string | undefined;
+    let noReply: string | undefined;
 
-    if (this.isEnglish) {
-      title = this.emailInfo.title;
-      text = this.emailInfo.text;
-    } else {
-      title = this.emailInfo.titleGr;
-      text = this.emailInfo.textGr;
-    }
+    // if (this.isEnglish) {
+    //   title = this.emailInfo.title;
+    //   text = this.emailInfo.text;
+    //   noReply = this.emailInfo.noReply;
+    // } else {
+    //   title = this.emailInfo.titleGr;
+    //   text = this.emailInfo.textGr;
+    //   noReply = this.emailInfo.noReplyGr;
+    // }
+
+    title = this.isEnglish ? this.emailInfo.title : this.emailInfo.titleGr;
+    text = this.isEnglish ? this.emailInfo.text : this.emailInfo.textGr;
+    noReply = this.isEnglish ? this.emailInfo.noReply : this.emailInfo.noReplyGr;
+
     let previewTemplate = `  <!-- Background -->
     <div style="font-family: sans-serif!important; background-color: #dbdbdb;padding: 15px; color: #303030">
       <!-- Content Container -->
@@ -182,7 +188,7 @@ export class EmailTemplateComponent implements OnInit {
         <!-- Notes -->
         <div style="padding-top: 15px;padding-bottom: 15px;">
 
-          ※ Παρακαλώ μην απαντήσετε σε αυτό το email ("No-Reply") <br /><br />
+          ※ ${noReply} <br /><br />
         </div>
 
 
@@ -214,7 +220,13 @@ export class EmailTemplateComponent implements OnInit {
 } // EmailTemplateComponent End
 
 // =================NOTES==========================
-    // const d2 = this.renderer.createElement('div');
+
+  // @ViewChild('preview') d1: ElementRef<HTMLInputElement> = {} as ElementRef;
+
+  // encodedExampleHtml: string = 'encodedExampleHtml'; 
+
+
+  // const d2 = this.renderer.createElement('div');
     // this.d1.nativeElement.append(this.previewTemplate);
     // d2.append("p");
     // this.d1.nativeElement.appendChild(d2);

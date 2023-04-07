@@ -16,8 +16,6 @@ export class PreviewComponent {
 
   elRef: ElementRef;
 
-  isTemplate: boolean = true;
-
   constructor(elRef: ElementRef) {
     this.elRef = elRef;
   }
@@ -32,16 +30,9 @@ export class PreviewComponent {
 
 
   getHtmlContent() {
-    //This will return '<p> Text </p>' as a string
     this.previewTemplate = this.elRef.nativeElement.innerHTML;
-    // let btnStartIndex = this.previewTemplate.indexOf("<button");
-    // let btnEndIndex = this.previewTemplate.indexOf("</button>");
-    // let btnHtmlStr = this.previewTemplate.substring(btnStartIndex, btnEndIndex+9);
     let btnHtmlStr = this.elementExtractionFromString(this.previewTemplate, "<button", "</button>");
-
-    // let btnHtmlStr = this.previewTemplate.substring(1969, 2103)
-    console.log("btnHtmlStr : "+btnHtmlStr);
-    console.log("length : "+this.previewTemplate.length);
+    
     let previewTemplate = this.previewTemplate.replace(btnHtmlStr, "");
     this.previewTemplate = previewTemplate;
 
@@ -49,7 +40,6 @@ export class PreviewComponent {
   }
 
   downloadTemplate() {
-    // this.isTemplate = false;
     this.getHtmlContent();
     console.log(this.previewTemplate);
     var blob = new Blob([this.previewTemplate], {
