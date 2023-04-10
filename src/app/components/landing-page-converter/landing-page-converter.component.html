@@ -1,65 +1,115 @@
-<div class="form-group col-6">
-    <label for="logo">Logo Adress: </label>
+<div class="landing-page" [ngStyle]="applyStyles()">
+  
+  <!-- lang -->
+  <div id="language">
+    <select class="form-control" name="language" id="lang-select" onchange="switchLanguage(this.value)">
+      <option value='en' id='en'>English</option>
+      <option value='el' id='el'>Greek</option>
+    </select>
+    <fa-icon [icon]="closeIcon" id="close-icon" (click)="non_display()" data-toggle="tooltip" data-placement="top" title="Remove Language Selection "> </fa-icon>
+  </div>
+  <fa-icon [icon]="plusIcon" id="plus-icon" (click)="display() " data-toggle="tooltip" data-placement="top" title="Add Language Selection "> </fa-icon>
+  
+  <div class="bg-img-set form-group col-6" style="margin-left: .5em">
+    <label for="background" (click)="displaySpecs()" data-toggle="tooltip" data-placement="top" title="Click to set Background Image ">Background Image: </label>
+    <fa-icon [icon]="closeIcon" id="close-bg" (click)="non_display_bg()" data-toggle="tooltip" data-placement="top" title="Remove Language Selection "> </fa-icon>
     <input
-      type="text"
+    type="text"
+    class="form-control"
+    id="background"
+    [(ngModel)]="landingPage.background"
+    placeholder="Logo"
+    />
+  </div>
+
+  <!-- logo -->
+  <div class="row">
+    <div class="logo col">
+      <div class="venue-logo" [ngStyle]="logoStyles()">
+        <fa-icon [icon]="specsIcon" id="specs" (click)="logoSpecs()" data-toggle="tooltip" data-placement="top" title="Add logo image specs "> </fa-icon>
+      </div>
+      <div *ngIf="isLogoSpecs">
+        <user-edit></user-edit>
+      </div>
+
+    </div>
+  </div>
+  <!-- text -->
+  <!-- <div class="row">
+  <div class="col text-container">
+    <div class="venue-text text-center"></div>
+  </div>
+</div> -->
+
+<!-- buttons -->
+<!-- <div class="row">
+  <div class="col">
+    <div class="venue-buttons"></div>
+  </div>
+</div> -->
+
+<!-- text below -->
+<!-- <div class="row">
+  <div class="col text-container">
+    <div class="venue-text-below"></div>
+  </div>
+</div> -->
+
+
+<!-- <div class="form-group col-6">
+  <label for="logo">Logo Adress: </label>
+  <input
+  type="text"
       class="form-control"
       [(ngModel)]="landingPage.logo"
       (change)="updatePreviewTemplate()"
       placeholder="Logo"
 
       />
-</div>
-<div class="form-group col-6">
-    <label for="logo">Background Image: </label>
-    <input
-      type="text"
-      class="form-control"
-      [(ngModel)]="landingPage.background"
-      (change)="updatePreviewTemplate()"
-      placeholder="Logo"
+</div> -->
 
-      />
-</div>
-
-<div class="form-group col-6">
+  
+  <!-- <div class="form-group col-6">
     <label for="font">Font Details: </label>
     <input
-      type="text"
-      class="form-control"
-      [(ngModel)]="landingPage.fontFace.fontFamily"
-      (change)="updatePreviewTemplate()"
-      placeholder="sans-serif"
-      />
-      <input
-      type="text"
-      class="form-control"
-      [(ngModel)]="landingPage.fontFace.src"
-      (change)="updatePreviewTemplate()"
-      placeholder="source link"
-      />
-</div>
-
-<div class="link-details">
-  <label for="link">Link Details: </label>
-  <input
+    type="text"
+    class="form-control"
+    [(ngModel)]="landingPage.fontFace.fontFamily"
+    (change)="updatePreviewTemplate()"
+    placeholder="sans-serif"
+    />
+    <input
+    type="text"
+    class="form-control"
+    [(ngModel)]="landingPage.fontFace.src"
+    (change)="updatePreviewTemplate()"
+    placeholder="source link"
+    />
+  </div> -->
+  
+  <!-- <div class="link-details">
+    <label for="link">Link Details: </label>
+    <input
     type="text"
     class="form-control"
     [(ngModel)]="landingPage.link.text"
     (change)="updatePreviewTemplate()"
     placeholder="Link inner text"
     />
-  <input
+    <input
     type="url"
     class="form-control"
     [(ngModel)]="landingPage.link.url"
     (change)="updatePreviewTemplate()"
     placeholder="link address"
     />
-  <label for="bgColor">Background Color: </label>
-  <input type="color" id="font" name="head"  value="#4fa0f0" placeholder="background color"><br>
+    <label for="bgColor">Background Color: </label>
+    <input type="color" id="font" name="head"  value="#4fa0f0" placeholder="background color"><br>
   <label for="FontColor">Font Color: </label>
   <input type="color" id="head" name="head"  value="#ffffff" placeholder="font color"><br>
-</div>
+</div> -->
 
-<div style= "margin: 2em;" [innerHTML]="sanitizer.bypassSecurityTrustHtml(previewTemplate)"></div>
+<!-- <div style= "margin: 2em;" [innerHTML]="sanitizer.bypassSecurityTrustHtml(previewTemplate)"></div> -->
 
+
+</div> <!-- end of landing-page -->

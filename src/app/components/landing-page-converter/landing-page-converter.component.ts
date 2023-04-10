@@ -1,6 +1,11 @@
 //@angular
 import { Component, Renderer2, ViewContainerRef, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
+//fontawesome
+import { faWindowClose } from '@fortawesome/free-solid-svg-icons';
+import { faPlus} from '@fortawesome/free-solid-svg-icons';
+import { faStickyNote} from '@fortawesome/free-solid-svg-icons';
+
 // models
 import { LandingPage} from '../../models/landingPage.model';
 
@@ -8,14 +13,28 @@ import { LandingPage} from '../../models/landingPage.model';
   selector: 'app-landing-page-converter',
   templateUrl: './landing-page-converter.component.html',
   styleUrls: ['./landing-page-converter.component.scss']
+  // styles: [':host { background-color: #000; }']
+  // styles: ['h1 { font-weight: normal; color: {color} }']
 })
 export class LandingPageConverterComponent implements OnInit {
   // Variables
+  color = 'red';
+
+  closeIcon = faWindowClose;
+  plusIcon = faPlus;
+  specsIcon = faStickyNote;
+  
+  isLogoSpecs = false;
+
   landingPage: LandingPage = {
     id: 1,
     name: 'Landing Page 1',
-    logo: 'http://codeskulptor-demos.commondatastorage.googleapis.com/GalaxyInvaders/back02.jpg',
-    background: 'http://commondatastorage.googleapis.com/codeskulptor-assets/lathrop/nebula_blue.s2014.png',
+    logo: {
+      url: 'https://www.i-host.gr/content/customers/img/aleria/logo.png',
+      width: '200px',
+      height: '200px',
+    },
+    background: 'https://www.i-host.gr/content/links/images/costanavarino/bg.jpg',
     fontFace : {
       fontFamily: '',
       // fontFamily: 'sans-serif',
@@ -29,6 +48,59 @@ export class LandingPageConverterComponent implements OnInit {
     },
   };
 
+  non_display(){
+    console.log('noneDisplay');
+    // const language = document.querySelector('language');
+    const language = document.getElementById('language');
+    const close = document.getElementById('close-icon');
+    const plus = document.getElementById('plus-icon');
+
+    if (language !== null && close !== null && plus !== null) {
+      language.style.display = 'none';
+      close.style.display = 'none';
+      plus.style.display = 'block';
+
+    }
+  }
+
+  display(){
+    console.log('display');
+    // const language = document.querySelector('language');
+    const language = document.getElementById('language');
+    const plus = document.getElementById('plus-icon');
+    const close = document.getElementById('close-icon');
+
+    if (language !== null && plus !== null && close !== null) {
+      language.style.display = 'block';
+      close.style.display = 'inline';
+      plus.style.display = 'none';
+    }
+  }
+
+   displaySpecs(){
+    console.log('displaySpecs');
+    const close = document.getElementById('close-bg');
+    const background = document.getElementById('background');
+    if (background !== null && close !== null) {
+      background.style.display = 'block';
+      close.style.display = 'inline';
+    }
+  }
+
+  non_display_bg(){
+    console.log('noneDisplay');
+    const background = document.getElementById('background');
+    const close = document.getElementById('close-bg');
+    
+    // const plus = document.getElementById('plus-icon');
+// 
+    if (background !== null && close !== null ) {
+      background.style.display = 'none';
+      close.style.display = 'none';
+      // plus.style.display = 'block';
+
+    }
+  }
   previewTemplate = '';
   
   // Functions
@@ -38,6 +110,26 @@ export class LandingPageConverterComponent implements OnInit {
   ngOnInit(): void {
     this.updatePreviewTemplate();
   }
+  
+  applyStyles() {
+    const styles = {'width': '100%',
+    'height': '100%',
+    'background-image': `url('${this.landingPage.background}')`,
+    'background-size': 'cover'};
+    return styles;
+}
+
+logoStyles() {
+  const styles = {'width': `${this.landingPage.logo.width}`,
+  'height': `${this.landingPage.logo.height}`,
+  'background-image': `url('${this.landingPage.logo.url}')`,
+  'background-size': 'cover'};
+  return styles;
+}
+
+logoSpecs() {
+  isLogoSpecs = true;
+}
   
   updatePreviewTemplate() {
     let logo = this.landingPage.logo;

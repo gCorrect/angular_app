@@ -19,6 +19,7 @@ import { UsersListComponent } from './components/users-list/users-list.component
 import { PreviewComponent } from './components/preview/preview.component';
 import { UsersService } from './services/users.service';
 import { LandingPageConverterComponent } from './components/landing-page-converter/landing-page-converter.component';
+import { AttributeSetterComponent } from './attribute-setter/attribute-setter.component';
 
 @NgModule({
   imports: [
@@ -39,6 +40,7 @@ import { LandingPageConverterComponent } from './components/landing-page-convert
     EmailTemplReactiveComponent,
     PreviewComponent,
     LandingPageConverterComponent,
+    AttributeSetterComponent,
   ],
   providers: [UsersService],
   bootstrap: [AppComponent],

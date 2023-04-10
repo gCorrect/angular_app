@@ -1,7 +1,11 @@
 export interface LandingPage {
   id: number;
   name: string;
-  logo: string;
+  logo: {
+    url: string;
+    width: string;
+    height: string;
+  },
   background: string;
   fontFace : {
     fontFamily: string;
