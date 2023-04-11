@@ -1,45 +1,125 @@
+
 <div class="landing-page" [ngStyle]="applyStyles()">
-  
+
   <!-- lang -->
-  <div id="language">
+  <div id="language" [ngStyle]="languageStyles()">
     <select class="form-control" name="language" id="lang-select" onchange="switchLanguage(this.value)">
       <option value='en' id='en'>English</option>
       <option value='el' id='el'>Greek</option>
     </select>
-    <fa-icon [icon]="closeIcon" id="close-icon" (click)="non_display()" data-toggle="tooltip" data-placement="top" title="Remove Language Selection "> </fa-icon>
+    <fa-icon [icon]="closeIcon" id="close-icon" (click)="hideLanguage()" data-toggle="tooltip" data-placement="top" title="Remove Language Selection "> </fa-icon>
   </div>
-  <fa-icon [icon]="plusIcon" id="plus-icon" (click)="display() " data-toggle="tooltip" data-placement="top" title="Add Language Selection "> </fa-icon>
+  <fa-icon [icon]="plusIcon" id="plus-icon" (click)="displayLanguage() " data-toggle="tooltip" data-placement="top" title="Add Language Selection "> </fa-icon>
   
+  <!-- font family-->
+  <div class="font-face-set form-group col-6" style="margin-left: .5em">
+    <div class="label">
+      <label for="font-family" (click)="displayFontForm()" data-toggle="tooltip" data-placement="top" title="Click to set Font Details ">Font family: </label>
+      <fa-icon [icon]="closeIcon" id="close-font" (click)="hideFontForm()" data-toggle="tooltip" data-placement="top" title="Close Fonts Form "> </fa-icon>
+    </div>
+    <div id="font-face-form">
+      <input
+      type="text"
+      class="form-control"
+      id="font-family"
+      [(ngModel)]="landingPage.fontFace.fontFamily"
+      placeholder="sans-serif"
+      />
+    </div>
+  </div>
+  <!-- background -->
   <div class="bg-img-set form-group col-6" style="margin-left: .5em">
-    <label for="background" (click)="displaySpecs()" data-toggle="tooltip" data-placement="top" title="Click to set Background Image ">Background Image: </label>
-    <fa-icon [icon]="closeIcon" id="close-bg" (click)="non_display_bg()" data-toggle="tooltip" data-placement="top" title="Remove Language Selection "> </fa-icon>
+    <div class="label">
+      <label for="background" (click)="displayBgForm()" data-toggle="tooltip" data-placement="top" title="Click to set Background Image ">Background Image: </label>
+      <fa-icon [icon]="closeIcon" id="close-bg" (click)="hideBgForm()" data-toggle="tooltip" data-placement="top" title="Close Background Form"> </fa-icon>
+    </div>
     <input
-    type="text"
-    class="form-control"
-    id="background"
-    [(ngModel)]="landingPage.background"
-    placeholder="Logo"
+      type="text"
+      class="form-control"
+      id="background"
+      [(ngModel)]="landingPage.background"
+      placeholder="background image URL"
     />
   </div>
+
 
   <!-- logo -->
   <div class="row">
     <div class="logo col">
       <div class="venue-logo" [ngStyle]="logoStyles()">
-        <fa-icon [icon]="specsIcon" id="specs" (click)="logoSpecs()" data-toggle="tooltip" data-placement="top" title="Add logo image specs "> </fa-icon>
+        <fa-icon [icon]="specsIcon" class="specs-icon" (click)="logoSpecs()" data-toggle="tooltip" data-placement="top" title="Add logo image specs "> </fa-icon>
       </div>
       <div *ngIf="isLogoSpecs">
-        <user-edit></user-edit>
-      </div>
+        <!-- <attribute-setter (newItemEvent)="setClose($event)" ></attribute-setter> -->
+        <div class="logo-details form-group col-6">
+          <fa-icon [icon]="closeIcon" id="close-icon" style = "color : white" (click)="closeLogoDetails()" data-toggle="tooltip" data-placement="top" title="Close Logo Details"> </fa-icon>
+            <label for="url">Logo Image Address: </label>
+            <input
+            type="url"
+            class="form-control"
+            [(ngModel)]="landingPage.logo.url"
+            placeholder="https://www.mylogoimage.com/logo.jpg"
+            />
+            <label for="width">Width: </label>
+            <input
+            type="text"
+            class="form-control"
+            [(ngModel)]="landingPage.logo.width"
+            placeholder="200px"
+            />
+            <label for="height">Heigth: </label>
+            <input
+            type="text"
+            class="form-control"
+            [(ngModel)]="landingPage.logo.height"
+            placeholder="200px"
+            />
+        </div><!-- end of logo details -->
+      </div><!-- end of isLogoSpecs -->
 
     </div>
   </div>
   <!-- text -->
-  <!-- <div class="row">
-  <div class="col text-container">
-    <div class="venue-text text-center"></div>
-  </div>
-</div> -->
+    <div class="row">
+      <div class="col text-container">
+        <div class="venue-text text-center" [ngStyle]="textStyles()">{{landingPage.text.content}}</div>
+        <fa-icon [icon]="specsIcon" class="specs-icon" (click)="textSpecs()" data-toggle="tooltip" data-placement="top" title="Add logo image specs "> </fa-icon>
+      </div>
+      <div *ngIf="isTextSpecs">
+        <!-- <attribute-setter (newItemEvent)="setClose($event)" ></attribute-setter> -->
+        <div class="logo-details form-group col-6">
+          <fa-icon [icon]="closeIcon" id="close-icon" style = "color : white" (click)="closeTextDetails()" data-toggle="tooltip" data-placement="top" title="Close Logo Details"> </fa-icon>
+            <label for="url">Text Content: </label>
+            <textarea
+              type="text"
+              class="form-control"
+              [(ngModel)]="landingPage.text.content"
+              placeholder="https://www.mylogoimage.com/logo.jpg"
+            ></textarea>
+            <label for="width">Font Color: </label>
+            <input
+              type="text"
+              class="form-control"
+              [(ngModel)]="landingPage.text.color"
+              placeholder="200px"
+            />
+            <label for="height">Heigth: </label>
+            <input
+              type="text"
+              class="form-control"
+              [(ngModel)]="landingPage.logo.height"
+              placeholder="200px"
+            />
+            <label for="background_color">Background Color: </label>
+            <input
+              type="text"
+              class="form-control"
+              [(ngModel)]="landingPage.text.backgroundColor"
+              placeholder="e.g. black or #000000 or rgb(0,0,0, .5) rgba(0,0,0, .5) " 
+            />
+        </div><!-- end of logo details -->
+      </div><!-- end of isLogoSpecs -->
+    </div>
 
 <!-- buttons -->
 <!-- <div class="row">

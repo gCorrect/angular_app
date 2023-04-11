@@ -7,12 +7,59 @@
     // #language{
     //     display: none;
     // }
-    .bg-img-set{
-
-        #background{
+    .label{
+        display: flex;
+        
+        #close-bg{
             display: none;
+            color: white;
+            margin-left: .5em;
+            opacity: 0.5;
+            &:hover{
+                cursor: pointer;
+                // color: rgb(250, 235, 235);
+                opacity: 1;
+            }
         }
-            #close-bg{
+        #close-font{
+            display: none;
+            color: white;
+            margin-left: .5em;
+            opacity: 0.5;
+            &:hover{
+                cursor: pointer;
+                // color: rgb(250, 235, 235);
+                opacity: 1;
+            }
+        }
+    }
+    label{
+        font-size: 20px;
+        color: white;
+        cursor: pointer;
+        // font-weight: 600;
+    }
+    .specs-icon{
+        text-align: center;
+        display: inline;
+        color: rgb(168, 166, 166);
+        &:hover{
+            // opacity: 0.5;
+            cursor: pointer;
+            color: rgb(255, 255, 255);
+            opacity: 1;
+        }
+    }
+    .font-face-set{
+
+        #font-face-form{
+            display: none;
+        // #font-family{
+        //     display: none;
+        // }
+        }
+        
+            #close-font{
                 display: none;
                 color: white;
                 margin-left: .5em;
@@ -26,11 +73,12 @@
     
 
     }
-    label{
-        font-size: 20px;
-        color: white;
-        // font-weight: 600;
-    }
+    .bg-img-set{
+        #background{
+            display: none;
+        }
+
+    }    
     .logo{
         .venue-logo{
             // background-image : url('https://www.i-host.gr/content/customers/img/aleria/logo.png');
@@ -48,19 +96,7 @@
             margin: 50px auto;
             display: block;
             box-shadow: 0px 1px 2px 2px rgba(0, 0, 0,  0.27);
-        }
-        #specs{
-            margin-top: 5em;
-            margin-right: -5em;
-            display: inline;
-            // color: white;
-            // opacity: 0.5;
-            &:hover{
-                cursor: pointer;
-                // color: rgb(250, 235, 235);
-                opacity: 1;
-            }
-        }
+        }        
     }
 
     #language{
@@ -109,7 +145,31 @@
             }
         }
 }
-
+.logo-details{
+    display: flex;
+    flex-direction: column;
+    margin: .5em;
+    #close-icon {
+        align-self: flex-end;
+        color: white;
+        opacity: 0.5;
+        &:hover{
+            cursor: pointer;
+            // color: rgb(250, 235, 235);
+            opacity: 1;
+        }
+    }
+}
+.text-container {
+    display: flex;
+    // align-items: center;
+    // align-content: center;
+    justify-content: center;
+    text-align: center;
+}
+.venue-text{
+    width: fit-content;
+}    
 .link-details{
 
     & :nth-of-type(2), & :nth-of-type(3){

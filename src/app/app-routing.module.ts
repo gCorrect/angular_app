@@ -12,7 +12,9 @@ const routes: Routes = [
   { path: 'user-search/update/:id', component: UserEditComponent },
 
   { path: 'email-template', component: EmailTemplateComponent },
+  
   { path: 'landing-page-converter', component: LandingPageConverterComponent },
+  
 ];
 
 @NgModule({

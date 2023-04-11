@@ -17,28 +17,36 @@ import { LandingPage} from '../../models/landingPage.model';
   // styles: ['h1 { font-weight: normal; color: {color} }']
 })
 export class LandingPageConverterComponent implements OnInit {
+  
   // Variables
-  color = 'red';
-
+    //icons
   closeIcon = faWindowClose;
   plusIcon = faPlus;
   specsIcon = faStickyNote;
-  
+    // form display booleans        
   isLogoSpecs = false;
-
+  isTextSpecs = false;
+    //model
   landingPage: LandingPage = {
     id: 1,
     name: 'Landing Page 1',
+    fontFace : {
+      fontFamily: '',
+      // fontFamily: 'sans-serif',
+      src: 'https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap',
+    },
+    background: 'https://www.i-host.gr/content/links/images/costanavarino/bg.jpg',
     logo: {
       url: 'https://www.i-host.gr/content/customers/img/aleria/logo.png',
       width: '200px',
       height: '200px',
     },
-    background: 'https://www.i-host.gr/content/links/images/costanavarino/bg.jpg',
-    fontFace : {
-      fontFamily: '',
-      // fontFamily: 'sans-serif',
-      src: 'https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap',
+    text: {
+      content: '@myCompany',
+      color: '#ffffff',
+      backgroundColor: '#000000d9',
+      padding: '20px',
+      borderRadius: '5px',
     },
     link: {
       text: '',
@@ -47,8 +55,10 @@ export class LandingPageConverterComponent implements OnInit {
       color: 'white',
     },
   };
-
-  non_display(){
+  
+  // Functions
+    // Language
+  hideLanguage(){
     console.log('noneDisplay');
     // const language = document.querySelector('language');
     const language = document.getElementById('language');
@@ -62,10 +72,7 @@ export class LandingPageConverterComponent implements OnInit {
 
     }
   }
-
-  display(){
-    console.log('display');
-    // const language = document.querySelector('language');
+  displayLanguage(){
     const language = document.getElementById('language');
     const plus = document.getElementById('plus-icon');
     const close = document.getElementById('close-icon');
@@ -76,8 +83,32 @@ export class LandingPageConverterComponent implements OnInit {
       plus.style.display = 'none';
     }
   }
+    // Font Face
+  displayFontForm(){
+    console.log('displaySpecs');
+    const close = document.getElementById('close-font');
+    const background = document.getElementById('font-face-form');
+    if (background !== null && close !== null) {
+      background.style.display = 'block';
+      close.style.display = 'inline';
+    }
+  }
+  hideFontForm(){
+    console.log('noneDisplay');
+    const background = document.getElementById('font-face-form');
+    const close = document.getElementById('close-font');
+    
+    // const plus = document.getElementById('plus-icon');
+// 
+    if (background !== null && close !== null ) {
+      background.style.display = 'none';
+      close.style.display = 'none';
+      // plus.style.display = 'block';
 
-   displaySpecs(){
+    }
+  }
+    // Background Image
+   displayBgForm(){
     console.log('displaySpecs');
     const close = document.getElementById('close-bg');
     const background = document.getElementById('background');
@@ -85,9 +116,8 @@ export class LandingPageConverterComponent implements OnInit {
       background.style.display = 'block';
       close.style.display = 'inline';
     }
-  }
-
-  non_display_bg(){
+  }    
+  hideBgForm(){
     console.log('noneDisplay');
     const background = document.getElementById('background');
     const close = document.getElementById('close-bg');
@@ -101,10 +131,8 @@ export class LandingPageConverterComponent implements OnInit {
 
     }
   }
-  previewTemplate = '';
   
-  // Functions
-    
+  // Functions    
   constructor(public sanitizer: DomSanitizer,) { }
 
   ngOnInit(): void {
@@ -112,11 +140,19 @@ export class LandingPageConverterComponent implements OnInit {
   }
   
   applyStyles() {
-    const styles = {'width': '100%',
-    'height': '100%',
-    'background-image': `url('${this.landingPage.background}')`,
-    'background-size': 'cover'};
+    const styles = {
+      // 'width': '100%',
+      // 'height': '100%',
+      'background-image': `url('${this.landingPage.background}')`,
+      'background-size': 'cover'};
     return styles;
+}
+
+languageStyles() {
+  const styles = {
+    'font-family': `${this.landingPage.fontFace.fontFamily}`,
+  };
+  return styles;
 }
 
 logoStyles() {
@@ -128,9 +164,48 @@ logoStyles() {
 }
 
 logoSpecs() {
-  isLogoSpecs = true;
+  this.isLogoSpecs = true;
 }
-  
+
+closeLogoDetails() {
+  this.isLogoSpecs = false;
+}
+
+textSpecs() {
+  this.isTextSpecs = true;
+}
+
+closeTextDetails() {
+  this.isTextSpecs = false;
+}
+
+
+textStyles() {
+  const styles = {
+    'font-family': `${this.landingPage.fontFace.fontFamily}`,
+    'color': `${this.landingPage.text.color}`,
+  'background-color': `${this.landingPage.text.backgroundColor}`,
+  'padding': `${this.landingPage.text.padding}`,
+  'border-radius': `${this.landingPage.text.borderRadius}`,
+};
+  return styles;
+}
+
+
+// ==========not in use================
+fontStyles() {
+  const styles = {'font-family': 'sans-serif',
+  };
+  return styles;
+}
+
+setClose(close: boolean){
+  this.isLogoSpecs = false;
+  console.log("setClose "+close)
+}
+
+previewTemplate = '';
+
   updatePreviewTemplate() {
     let logo = this.landingPage.logo;
     console.log('logo'+logo)

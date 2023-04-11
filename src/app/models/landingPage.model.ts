@@ -11,6 +11,13 @@ export interface LandingPage {
     fontFamily: string;
     src: string;
   },
+  text: {
+    content: string;
+    color: string;
+    backgroundColor: string;
+    padding: string;
+    borderRadius: string;
+  },
   link: {
     text: string;
     url: string;
