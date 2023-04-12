@@ -80,53 +80,69 @@
     </div>
   </div>
   <!-- text -->
-    <div class="row">
-      <div class="col text-container">
-        <div class="venue-text text-center" [ngStyle]="textStyles()">{{landingPage.text.content}}</div>
+  <div class="row">
+    <div class="col text-container">
+      <div class="venue-text text-center" [ngStyle]="textStyles()">{{landingPage.text.content}}</div>
+      <fa-icon [icon]="specsIcon" class="specs-icon" (click)="textSpecs()" data-toggle="tooltip" data-placement="top" title="Add logo image specs "> </fa-icon>
+    </div>
+    <div *ngIf="isTextSpecs">
+      <!-- <attribute-setter (newItemEvent)="setClose($event)" ></attribute-setter> -->
+      <div class="logo-details form-group col-6">
+        <fa-icon [icon]="closeIcon" id="close-icon" style = "color : white" (click)="closeTextDetails()" data-toggle="tooltip" data-placement="top" title="Close Logo Details"> </fa-icon>
+          <label for="url">Text Content: </label>
+          <textarea
+            type="text"
+            class="form-control"
+            [(ngModel)]="landingPage.text.content"
+            placeholder="https://www.mylogoimage.com/logo.jpg"
+          ></textarea>
+          <label for="width">Font Color: </label>
+          <input
+            type="text"
+            class="form-control"
+            [(ngModel)]="landingPage.text.color"
+            placeholder="200px"
+          />            
+          <label for="background_color">Background Color: </label>
+          <input
+            type="text"
+            class="form-control"
+            [(ngModel)]="landingPage.text.backgroundColor"
+            placeholder="e.g. black or #000000 or rgb(0,0,0, .5) rgba(0,0,0, .5) " 
+          />
+          <label for="width">Width: </label>
+          <input
+            type="text"
+            class="form-control"
+            [(ngModel)]="landingPage.logo.width"
+            placeholder="200px"
+          />
+          <label for="height">Heigth: </label>
+          <input
+            type="text"
+            class="form-control"
+            [(ngModel)]="landingPage.logo.height"
+            placeholder="200px"
+          />
+      </div><!-- end of logo details -->
+    </div><!-- end of isLogoSpecs -->
+  </div>
+    
+  <!-- buttons -->
+  <div class="row">
+    <div class="col">
+      <div class="venue-buttons" >
+        <a href={{landingPage.link.url}}>
+          <button class="btn-undefined" >
+            <i class="bi bi-undefined"></i>
+            <span>{{landingPage.link.button.text}}</span>
+          </button>
+        </a>
         <fa-icon [icon]="specsIcon" class="specs-icon" (click)="textSpecs()" data-toggle="tooltip" data-placement="top" title="Add logo image specs "> </fa-icon>
       </div>
-      <div *ngIf="isTextSpecs">
-        <!-- <attribute-setter (newItemEvent)="setClose($event)" ></attribute-setter> -->
-        <div class="logo-details form-group col-6">
-          <fa-icon [icon]="closeIcon" id="close-icon" style = "color : white" (click)="closeTextDetails()" data-toggle="tooltip" data-placement="top" title="Close Logo Details"> </fa-icon>
-            <label for="url">Text Content: </label>
-            <textarea
-              type="text"
-              class="form-control"
-              [(ngModel)]="landingPage.text.content"
-              placeholder="https://www.mylogoimage.com/logo.jpg"
-            ></textarea>
-            <label for="width">Font Color: </label>
-            <input
-              type="text"
-              class="form-control"
-              [(ngModel)]="landingPage.text.color"
-              placeholder="200px"
-            />
-            <label for="height">Heigth: </label>
-            <input
-              type="text"
-              class="form-control"
-              [(ngModel)]="landingPage.logo.height"
-              placeholder="200px"
-            />
-            <label for="background_color">Background Color: </label>
-            <input
-              type="text"
-              class="form-control"
-              [(ngModel)]="landingPage.text.backgroundColor"
-              placeholder="e.g. black or #000000 or rgb(0,0,0, .5) rgba(0,0,0, .5) " 
-            />
-        </div><!-- end of logo details -->
-      </div><!-- end of isLogoSpecs -->
     </div>
-
-<!-- buttons -->
-<!-- <div class="row">
-  <div class="col">
-    <div class="venue-buttons"></div>
   </div>
-</div> -->
+
 
 <!-- text below -->
 <!-- <div class="row">

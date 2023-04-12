@@ -49,10 +49,17 @@ export class LandingPageConverterComponent implements OnInit {
       borderRadius: '5px',
     },
     link: {
-      text: '',
-      url: '',
-      bgColor: 'red',
-      color: 'white',
+      url: 'https://www.aleria.gr/en/menu',
+      maxWidth: '400px',
+      button: {
+        text: 'MyLink',
+        color: 'white',
+        bgColor: 'red',
+        margin: '15px auto',
+        padding: '10px 20px',
+        borderRadius: '5px',
+      }
+      
     },
   };
   
@@ -187,6 +194,24 @@ textStyles() {
   'background-color': `${this.landingPage.text.backgroundColor}`,
   'padding': `${this.landingPage.text.padding}`,
   'border-radius': `${this.landingPage.text.borderRadius}`,
+};
+  return styles;
+}
+
+linkStyles() {
+  const styles = {
+    'font-family': `${this.landingPage.fontFace.fontFamily}`,
+    'max-width': `${this.landingPage.link.maxWidth}`,
+};
+  return styles;
+}
+
+linkButtonStyles() {
+  const styles = {    
+    'background-color': `${this.landingPage.link.button.bgColor}`,
+    'color': `${this.landingPage.link.button.color}`,
+    'padding': `${this.landingPage.link.button.padding}`,
+    'border-radius': `${this.landingPage.link.button.borderRadius}`,
 };
   return styles;
 }

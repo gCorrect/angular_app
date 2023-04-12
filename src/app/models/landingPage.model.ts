@@ -19,10 +19,16 @@ export interface LandingPage {
     borderRadius: string;
   },
   link: {
-    text: string;
     url: string;
-    bgColor: string;
-    color: string;
+    maxWidth: string;
+    button:{
+      text: string;
+      color: string;
+      bgColor: string;
+      margin: string;
+      padding: string;
+      borderRadius: string;
+    }
   };
 }
 
