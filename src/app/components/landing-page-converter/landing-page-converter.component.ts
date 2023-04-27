@@ -1,20 +1,15 @@
 //@angular
-import { Component, Renderer2, ViewContainerRef, OnInit, ElementRef, ViewChild } from '@angular/core';
+import { Component, OnInit, } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 //fontawesome
-import { faWindowClose } from '@fortawesome/free-solid-svg-icons';
-import { faPlus} from '@fortawesome/free-solid-svg-icons';
-import { faStickyNote} from '@fortawesome/free-solid-svg-icons';
-
+import { faEdit, faPlus, faWindowClose } from '@fortawesome/free-solid-svg-icons';
 // models
 import { LandingPage} from '../../models/landingPage.model';
-
+import { LinkCustom } from '../../models/landingPage.model';
 @Component({
   selector: 'app-landing-page-converter',
   templateUrl: './landing-page-converter.component.html',
   styleUrls: ['./landing-page-converter.component.scss']
-  // styles: [':host { background-color: #000; }']
-  // styles: ['h1 { font-weight: normal; color: {color} }']
 })
 export class LandingPageConverterComponent implements OnInit {
   
@@ -22,17 +17,22 @@ export class LandingPageConverterComponent implements OnInit {
     //icons
   closeIcon = faWindowClose;
   plusIcon = faPlus;
-  specsIcon = faStickyNote;
-    // form display booleans        
+  editIcon = faEdit;
+    // form display booleans 
+  clickedLogo = true; 
+  isLogo = true;      
   isLogoSpecs = false;
+  clickedText= true; 
+  isText= true;
   isTextSpecs = false;
-    //model
+  isLinkSpecs = true;
+    //Objects
   landingPage: LandingPage = {
     id: 1,
     name: 'Landing Page 1',
     fontFace : {
-      fontFamily: '',
-      // fontFamily: 'sans-serif',
+      // fontFamily: '',
+      fontFamily: 'sans-serif',
       src: 'https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap',
     },
     background: 'https://www.i-host.gr/content/links/images/costanavarino/bg.jpg',
@@ -40,6 +40,7 @@ export class LandingPageConverterComponent implements OnInit {
       url: 'https://www.i-host.gr/content/customers/img/aleria/logo.png',
       width: '200px',
       height: '200px',
+      borderSize: '31px',
     },
     text: {
       content: '@myCompany',
@@ -50,26 +51,37 @@ export class LandingPageConverterComponent implements OnInit {
     },
     link: {
       url: 'https://www.aleria.gr/en/menu',
-      maxWidth: '400px',
+      width: '400px',
       button: {
-        text: 'MyLink',
-        color: 'white',
-        bgColor: 'red',
+        text: 'My Link',
+        color: '#ffffff',
+        bgColor: '#9f9240',
         margin: '15px auto',
         padding: '10px 20px',
         borderRadius: '5px',
       }
       
     },
+    links: [{
+      url: 'https://www.aleria.gr/en/menu',
+      width: '400px',
+      button: {
+        text: 'My Link',
+        color: '#ffffff',
+        bgColor: '#9f9240',
+        margin: '15px auto',
+        padding: '10px 20px',
+        borderRadius: '5px',
+      }],
   };
   
+  links: Array<LinkCustom> = [{url: 'https://www.aleria.gr/en/menu' }] 
   // Functions
     // Language
   hideLanguage(){
-    console.log('noneDisplay');
-    // const language = document.querySelector('language');
-    const language = document.getElementById('language');
-    const close = document.getElementById('close-icon');
+    console.log('hideLanguage')
+    const language  = document.getElementsByClassName('language').item(0) as HTMLElement;
+    const close = document.getElementById('close-lang');
     const plus = document.getElementById('plus-icon');
 
     if (language !== null && close !== null && plus !== null) {
@@ -80,50 +92,71 @@ export class LandingPageConverterComponent implements OnInit {
     }
   }
   displayLanguage(){
-    const language = document.getElementById('language');
+    console.log('displayLanguage')
+    const language  = document.getElementsByClassName('language').item(0) as HTMLElement;
     const plus = document.getElementById('plus-icon');
-    const close = document.getElementById('close-icon');
+    const close = document.getElementById('close-lang');
 
     if (language !== null && plus !== null && close !== null) {
+    console.log('displayLanguage')
+
       language.style.display = 'block';
       close.style.display = 'inline';
       plus.style.display = 'none';
     }
   }
+  languageStyles() {
+    const styles = {
+      'font-family': `${this.landingPage.fontFace.fontFamily}`,
+    };
+    return styles;
+  }
+  
     // Font Face
   displayFontForm(){
-    console.log('displaySpecs');
     const close = document.getElementById('close-font');
-    const background = document.getElementById('font-face-form');
-    if (background !== null && close !== null) {
-      background.style.display = 'block';
-      close.style.display = 'inline';
+    const fontFaceForm = document.getElementById('font-face-form');
+    const fontEditIcon = document.getElementById('font-edit-icon');
+    if (fontFaceForm  !== null && close !== null && fontEditIcon !== null) {
+      fontFaceForm.style.display = 'flex';
+      fontFaceForm.style.flexDirection = 'column';
+      close.style.display = 'block';
+      close.style.alignSelf = 'flex-end';
+      fontEditIcon.style.display = 'none';
     }
   }
   hideFontForm(){
-    console.log('noneDisplay');
     const background = document.getElementById('font-face-form');
     const close = document.getElementById('close-font');
+    const fontEditIcon = document.getElementById('font-edit-icon');
     
     // const plus = document.getElementById('plus-icon');
 // 
-    if (background !== null && close !== null ) {
+    if (background !== null && close !== null && fontEditIcon !== null ) {
       background.style.display = 'none';
       close.style.display = 'none';
+      fontEditIcon.style.display = 'inline';
       // plus.style.display = 'block';
 
     }
   }
+
     // Background Image
-   displayBgForm(){
-    console.log('displaySpecs');
-    const close = document.getElementById('close-bg');
-    const background = document.getElementById('background');
-    if (background !== null && close !== null) {
-      background.style.display = 'block';
-      close.style.display = 'inline';
-    }
-  }    
+  bgStyles() {
+    const styles = {
+      'background-image': `url('${this.landingPage.background}')`,
+      'background-size': 'cover'};
+    return styles;
+  }
+  displayBgForm(){
+  const close = document.getElementById('close-bg');
+  const background = document.getElementById('background');
+  if (background !== null && close !== null) {
+    background.style.display = 'block';
+    close.style.alignSelf = 'flex-end';
+    close.style.display = 'inline';
+  }
+}    
   hideBgForm(){
     console.log('noneDisplay');
     const background = document.getElementById('background');
@@ -139,83 +172,108 @@ export class LandingPageConverterComponent implements OnInit {
     }
   }
   
-  // Functions    
-  constructor(public sanitizer: DomSanitizer,) { }
-
-  ngOnInit(): void {
-    this.updatePreviewTemplate();
-  }
-  
-  applyStyles() {
-    const styles = {
-      // 'width': '100%',
-      // 'height': '100%',
-      'background-image': `url('${this.landingPage.background}')`,
-      'background-size': 'cover'};
+  // Logo
+  logoStyles() {
+    let styles = {};
+    if(this.landingPage.logo.url === ''){
+      styles={'display': 'none'};
+    }else{
+      styles = {'width': `${this.landingPage.logo.width}`,
+      'height': `${this.landingPage.logo.height}`,
+      'background-image': `url('${this.landingPage.logo.url}')`,
+      };
+    }
     return styles;
-}
+  }
 
-languageStyles() {
-  const styles = {
-    'font-family': `${this.landingPage.fontFace.fontFamily}`,
+  logoSpecs() {
+    if (this.clickedLogo){
+      this.isLogoSpecs = true
+      this.clickedLogo = false; 
+    }else{
+      this.isLogoSpecs = false;
+      this.clickedLogo = true;
+    }  
+  }
+
+  closeLogoDetails() {
+    this.isLogoSpecs = false;
+  }
+
+  editLogoStyles(){
+    const styles = {
+      // 'margin-left': this.landingPage.logo.width,
+      // 'margin-top': '5em',
+    };
+    return styles;
+  }
+
+  //Text
+  textStyles() {
+    const styles = {
+      'font-family': `${this.landingPage.fontFace.fontFamily}`,
+      'color': `${this.landingPage.text.color}`,
+    'background-color': `${this.landingPage.text.backgroundColor}`,
+    'padding': `${this.landingPage.text.padding}`,
+    'border-radius': `${this.landingPage.text.borderRadius}`,
   };
-  return styles;
+    return styles;
+  }
+  textSpecs() {
+    if (this.clickedText){
+      this.isTextSpecs = true
+      this.clickedText = false; 
+    }else{
+      this.isTextSpecs = false;
+      this.clickedText = true;
+    }  
+  
+  }
+  closeTextDetails() {
+    this.isTextSpecs = false;
+  }
+
+    // Link
+  linkStyles() {
+    const styles = {
+      'font-family': `${this.landingPage.fontFace.fontFamily}`,
+      'width': `${this.landingPage.link.width}`,
+  };
+    return styles;
+  }
+  linkButtonStyles() {
+    const styles = {    
+      'color': `${this.landingPage.link.button.color}`,
+      'background-color': `${this.landingPage.link.button.bgColor}`,
+      'padding': `${this.landingPage.link.button.padding}`,
+      'border-radius': `${this.landingPage.link.button.borderRadius}`,
+  };
+    return styles;
+  }
+  linkSpecs() {
+  this.isLinkSpecs = true;
+  }
+  closeLinkDetails() {
+    this.isLinkSpecs = false;
+  }
+  addButton(){
+    //console.log(this.name,this.empoloyeeID);
+    let links= this.landingPage.links;
+    let linkCustObj = new LinkCustom();
+    linkCustObj.url= 'https://www.mylink.com';
+    if(linkCustObj.button){
+      linkCustObj.button.text = 'My Link';
+
+    }
+    links.push(linkCustObj); 
+    console.log(links);
+  }
+
+constructor(public sanitizer: DomSanitizer,) { }
+
+ngOnInit(): void {
+  this.updatePreviewTemplate();
 }
-
-logoStyles() {
-  const styles = {'width': `${this.landingPage.logo.width}`,
-  'height': `${this.landingPage.logo.height}`,
-  'background-image': `url('${this.landingPage.logo.url}')`,
-  'background-size': 'cover'};
-  return styles;
-}
-
-logoSpecs() {
-  this.isLogoSpecs = true;
-}
-
-closeLogoDetails() {
-  this.isLogoSpecs = false;
-}
-
-textSpecs() {
-  this.isTextSpecs = true;
-}
-
-closeTextDetails() {
-  this.isTextSpecs = false;
-}
-
-
-textStyles() {
-  const styles = {
-    'font-family': `${this.landingPage.fontFace.fontFamily}`,
-    'color': `${this.landingPage.text.color}`,
-  'background-color': `${this.landingPage.text.backgroundColor}`,
-  'padding': `${this.landingPage.text.padding}`,
-  'border-radius': `${this.landingPage.text.borderRadius}`,
-};
-  return styles;
-}
-
-linkStyles() {
-  const styles = {
-    'font-family': `${this.landingPage.fontFace.fontFamily}`,
-    'max-width': `${this.landingPage.link.maxWidth}`,
-};
-  return styles;
-}
-
-linkButtonStyles() {
-  const styles = {    
-    'background-color': `${this.landingPage.link.button.bgColor}`,
-    'color': `${this.landingPage.link.button.color}`,
-    'padding': `${this.landingPage.link.button.padding}`,
-    'border-radius': `${this.landingPage.link.button.borderRadius}`,
-};
-  return styles;
-}
-
 
 // ==========not in use================
 fontStyles() {
@@ -232,64 +290,28 @@ setClose(close: boolean){
 previewTemplate = '';
 
   updatePreviewTemplate() {
-    let logo = this.landingPage.logo;
-    console.log('logo'+logo)
-    let background = this.landingPage.background;
-    let title: string | undefined;
-    let text: string | undefined;
-    let noReply: string | undefined;
-
-    // if (this.isEnglish) {
-    //   title = this.landingPage.title;
-    //   text = this.landingPage.text;
-    //   noReply = this.landingPage.noReply;
-    // } else {
-    //   title = this.landingPage.titleGr;
-    //   text = this.landingPage.textGr;
-    //   noReply = this.landingPage.noReplyGr;
-    // }
-
-    let previewTemplate = `  <div class="container">
-    <!-- lang -->
-    <select class="form-control" name="language" id="language" onchange="switchLanguage(this.value)">
-        <option value='en' id='en'>English</option>
-        <option value='el' id='el'>Greek</option>
-    </select>
-
-    <!-- logo -->
+    
+    let previewTemplate = `
     <div class="row">
-        <div class="col">
-            <div class="venue-logo">
-              <img src="${logo}">
-            </div>
+    <div class="col">
+      <div class="venue-buttons" >
+        <!-- <a href={{landingPage.link.url}} > -->
+        <a href={{landingPage.link.url}} [ngStyle]="linkStyles()" >
+          <!-- <button class="btn-undefined" > -->
+          <button class="btn-undefined" [ngStyle]="linkButtonStyles()">
+            <i class="bi bi-undefined"></i>
+            <span>{{landingPage.link.button.text}}</span>
+          </button>
+        </a>
+        <div class="link-options">
+          <fa-icon [icon]="specsIcon" class="specs-icon" (click)="linkSpecs()" data-toggle="tooltip" data-placement="top" title="Add link button specs "> </fa-icon>
+          <fa-icon [icon]="plusIcon" id="add-btn-icon" (click)="addButton() " data-toggle="tooltip" data-placement="top" title="Add another Link Button"> </fa-icon>
         </div>
+      </div><!--venue-buttons -->
     </div>
-
-    <!-- text -->
-    <div class="row">
-        <div class="col text-container">
-            <div class="venue-text text-center"></div>
-        </div>
-    </div>
-
-    <!-- buttons -->
-    <div class="row">
-        <div class="col">
-            <div class="venue-buttons"></div>
-        </div>
-    </div>
-
-    <!-- text below -->
-    <div class="row">
-        <div class="col text-container">
-            <div class="venue-text-below"></div>
-        </div>
-    </div>
-
-</div>
-`;
+  </div>
+  
+    `;
     this.previewTemplate = previewTemplate;
   } //updatePreviewTemplate() End
-
-
 }

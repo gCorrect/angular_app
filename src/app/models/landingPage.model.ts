@@ -5,6 +5,7 @@ export interface LandingPage {
     url: string;
     width: string;
     height: string;
+    borderSize: string;
   },
   background: string;
   fontFace : {
@@ -20,7 +21,7 @@ export interface LandingPage {
   },
   link: {
     url: string;
-    maxWidth: string;
+    width: string;
     button:{
       text: string;
       color: string;
@@ -28,7 +29,20 @@ export interface LandingPage {
       margin: string;
       padding: string;
       borderRadius: string;
-    }
+    },
   };
+  links: Array<LinkCustom>,
 }
 
+export class LinkCustom {
+  url?: string;
+    width?: string;
+    button?:{
+      text: string;
+      color: string;
+      bgColor: string;
+      margin: string;
+      padding: string;
+      borderRadius: string;
+    }
+}

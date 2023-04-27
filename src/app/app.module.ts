@@ -20,6 +20,8 @@ import { PreviewComponent } from './components/preview/preview.component';
 import { UsersService } from './services/users.service';
 import { LandingPageConverterComponent } from './components/landing-page-converter/landing-page-converter.component';
 import { AttributeSetterComponent } from './components/attribute-setter/attribute-setter.component';
+// Material
+import {MatCheckboxModule} from '@angular/material/checkbox'
 
 @NgModule({
   imports: [
@@ -30,6 +32,7 @@ import { AttributeSetterComponent } from './components/attribute-setter/attribut
     FontAwesomeModule,
     HttpClientModule,
     CKEditorModule,
+    MatCheckboxModule,
   ],
   declarations: [
     AppComponent,
