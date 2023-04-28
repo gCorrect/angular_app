@@ -31,18 +31,33 @@ export interface LandingPage {
       borderRadius: string;
     },
   };
-  links: Array<LinkCustom>,
+  links: Array<Link>,
 }
 
-export class LinkCustom {
-  url?: string;
-    width?: string;
-    button?:{
-      text: string;
-      color: string;
-      bgColor: string;
-      margin: string;
-      padding: string;
-      borderRadius: string;
-    }
+export class Link {
+  url: string = '';
+  width: string = '';
+  button: Button = new Button();
+}
+
+// export interface Link{
+//   url: string;
+//     width: string;
+//     button:{
+//       text: string;
+//       color: string;
+//       bgColor: string;
+//       margin: string;
+//       padding: string;
+//       borderRadius: string;
+//     }
+// }
+
+export class Button {
+  text: string = '';
+  color: string   = '';
+  bgColor: string = '';
+  margin: string = '';
+  padding: string = '';
+  borderRadius: string = '';
 }

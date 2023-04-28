@@ -22,7 +22,10 @@ import { LandingPageConverterComponent } from './components/landing-page-convert
 import { AttributeSetterComponent } from './components/attribute-setter/attribute-setter.component';
 // Material
 import {MatCheckboxModule} from '@angular/material/checkbox'
-
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatSelectModule} from '@angular/material/select'; 
+import { MatOptionModule } from '@angular/material/core';
+import { DeleteButtonComponent } from './delete-button/delete-button.component';
 @NgModule({
   imports: [
     BrowserModule,
@@ -33,6 +36,9 @@ import {MatCheckboxModule} from '@angular/material/checkbox'
     HttpClientModule,
     CKEditorModule,
     MatCheckboxModule,
+    MatFormFieldModule,
+    MatSelectModule,
+    MatOptionModule,
   ],
   declarations: [
     AppComponent,
@@ -44,6 +50,7 @@ import {MatCheckboxModule} from '@angular/material/checkbox'
     PreviewComponent,
     LandingPageConverterComponent,
     AttributeSetterComponent,
+    DeleteButtonComponent,
   ],
   providers: [UsersService],
   bootstrap: [AppComponent],

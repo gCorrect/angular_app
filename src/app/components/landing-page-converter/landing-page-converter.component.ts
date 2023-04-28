@@ -2,10 +2,16 @@
 import { Component, OnInit, } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 //fontawesome
-import { faEdit, faPlus, faWindowClose } from '@fortawesome/free-solid-svg-icons';
+import { faEdit, faPlus, faWindowClose, faArrowUp, faArrowDown } from '@fortawesome/free-solid-svg-icons';
 // models
-import { LandingPage} from '../../models/landingPage.model';
-import { LinkCustom } from '../../models/landingPage.model';
+import { LandingPage, Link} from '../../models/landingPage.model';
+// import { LinkCustom } from '../../models/landingPage.model';
+import { fonts, Font } from 'src/app/models/fonts.model';
+
+interface Food {
+  value: string;
+  viewValue: string;
+}
 @Component({
   selector: 'app-landing-page-converter',
   templateUrl: './landing-page-converter.component.html',
@@ -18,6 +24,8 @@ export class LandingPageConverterComponent implements OnInit {
   closeIcon = faWindowClose;
   plusIcon = faPlus;
   editIcon = faEdit;
+  arrowUp = faArrowUp;
+  arrowDown = faArrowDown;
     // form display booleans 
   clickedLogo = true; 
   isLogo = true;      
@@ -25,7 +33,10 @@ export class LandingPageConverterComponent implements OnInit {
   clickedText= true; 
   isText= true;
   isTextSpecs = false;
-  isLinkSpecs = true;
+
+  isLinkSpecs:boolean[] = [false];
+  //
+  indexLink = 2;
     //Objects
   landingPage: LandingPage = {
     id: 1,
@@ -65,17 +76,24 @@ export class LandingPageConverterComponent implements OnInit {
     links: [{
       url: 'https://www.aleria.gr/en/menu',
       width: '400px',
-      button: {
-        text: 'My Link',
+      button:  {
+        text: 'My Link1',
         color: '#ffffff',
         bgColor: '#9f9240',
         margin: '15px auto',
         padding: '10px 20px',
         borderRadius: '5px',
-      }],
+      }
+    }],
   };
   
-  links: Array<LinkCustom> = [{url: 'https://www.aleria.gr/en/menu' }] 
+  fonts: Font[]= fonts;
+  foods: Food[] = [
+    {value: 'steak-0', viewValue: 'Steak'},
+    {value: 'pizza-1', viewValue: 'Pizza'},
+    {value: 'tacos-2', viewValue: 'Tacos'},
+  ];
+  
   // Functions
     // Language
   hideLanguage(){
@@ -234,40 +252,60 @@ export class LandingPageConverterComponent implements OnInit {
   }
 
     // Link
-  linkStyles() {
+  linkStyles(index: number) {
     const styles = {
       'font-family': `${this.landingPage.fontFace.fontFamily}`,
-      'width': `${this.landingPage.link.width}`,
+      'width': `${this.landingPage.links[index].width}`,
   };
     return styles;
   }
-  linkButtonStyles() {
+  linkButtonStyles(index: number) {
     const styles = {    
-      'color': `${this.landingPage.link.button.color}`,
-      'background-color': `${this.landingPage.link.button.bgColor}`,
-      'padding': `${this.landingPage.link.button.padding}`,
-      'border-radius': `${this.landingPage.link.button.borderRadius}`,
+      'color': `${this.landingPage.links[index].button.color}`,
+      'background-color': `${this.landingPage.links[index].button.bgColor}`,
+      'padding': `${this.landingPage.links[index].button.padding}`,
+      'border-radius': `${this.landingPage.links[index].button.borderRadius}`,
   };
     return styles;
   }
-  linkSpecs() {
-  this.isLinkSpecs = true;
+  linkSpecs(index:number) {
+  this.isLinkSpecs[index] = true;
   }
-  closeLinkDetails() {
-    this.isLinkSpecs = false;
+  closeLinkDetails(index:number) {
+    this.isLinkSpecs[index] = false;
   }
   addButton(){
+
     //console.log(this.name,this.empoloyeeID);
     let links= this.landingPage.links;
-    let linkCustObj = new LinkCustom();
+    // let link: Link = {url: '', width: '', button: {text: '', color: '', bgColor: '', padding: '', borderRadius: ''}, fontFace: {fontFamily: ''}, text: {color: '', backgroundColor: '', padding: '', borderRadius: ''}, logo: {url: '', width: '', height: ''}, background: '}};
+    let linkCustObj = new Link();
     linkCustObj.url= 'https://www.mylink.com';
     if(linkCustObj.button){
-      linkCustObj.button.text = 'My Link';
-
+      linkCustObj.button.text = `My Link${this.indexLink}`;
     }
     links.push(linkCustObj); 
+    this.indexLink++;
+    this.isLinkSpecs.push(false);
     console.log(links);
   }
+
+  moveLinkUp(index: number){
+    let links= this.landingPage.links;
+    let tempLink = links[index];
+    links[index] = links[index-1];
+    links[index-1] = tempLink;
+    console.log(links);
+  }
+  moveLinkDown(index: number){
+    let links= this.landingPage.links;
+    let tempLink = links[index];
+    links[index] = links[index+1];
+    links[index+1] = tempLink;
+    console.log(links);
+  }
+
+  
 
 constructor(public sanitizer: DomSanitizer,) { }
 

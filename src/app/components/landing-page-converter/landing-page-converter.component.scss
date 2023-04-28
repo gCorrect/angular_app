@@ -147,20 +147,19 @@
     margin: 15px 0;
     transform: translateX(7px);
     .link-options{
-        display: flex;
-        flex-direction: column;
-        #add-btn-icon{
-            color: white;
-            background-color: yellowgreen;
-            opacity: 0.5;
-            margin-top: 5px;
-            border-radius: 50%;
-            // border: 1px solid rgb(252, 116, 225);
-            &:hover{
-                cursor: pointer;
-                // color: rgb(250, 235, 235);
-                opacity: 1;
-            }
+			display: flex;
+			flex-direction: column;
+			#add-btn-icon{
+				color: rgb(168, 166, 166);
+				opacity: 0.5;
+				margin-top: 5px;
+				// border: 1px solid rgb(168, 166, 166);
+			&:hover{
+				cursor: pointer;
+				color: rgb(69, 69, 69);
+				opacity: 1;
+				// border: 1px solid rgb(69, 69, 69);
+			}
         }
     }
 }    
@@ -190,6 +189,21 @@
   
   .venue-buttons button:hover {
     background-color: #b3a54e!important;
+  }
+
+  .venue-buttons .arrows {
+	display: flex;
+	flex-direction: column;
+	justify-items: center;
+	justify-content: center;
+	.arrow-up, .arrow-down{
+		color: rgb(168, 166, 166);
+		&:hover{
+			cursor: pointer;
+			color: rgb(69, 69, 69);
+			opacity: 1;
+		}
+	}
   }
 .link-details{
 

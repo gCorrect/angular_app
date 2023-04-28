@@ -1,5 +1,14 @@
-<div class="landing-page" [ngStyle]="bgStyles()">
+<!-- <h4>Basic mat-select</h4>
+<mat-form-field appearance="fill">
+  <label>Favorite food</label>
+  <mat-select>
+    <mat-option *ngFor="let food of foods" [value]="food.value">
+      {{food.viewValue}}
+    </mat-option>
+  </mat-select>
+</mat-form-field> -->
 
+<div class="landing-page" [ngStyle]="bgStyles()">
   <!-- lang -->
   <div class="language" id="language" [ngStyle]="languageStyles()">
     <select class="form-control" title="language" name="language" id="lang-select" onchange="switchLanguage(this.value)">
@@ -27,6 +36,9 @@
       [(ngModel)]="landingPage.fontFace.fontFamily"
       placeholder="font family, e.g. &quot;Arial&quot;"
       />
+      <select class="form-select" aria-label="font list" [(ngModel)]="landingPage.fontFace.fontFamily">
+        <option *ngFor="let font of fonts" value={{font.value}}>{{font.viewValue}}</option>
+      </select>
     </div>
   </div>
   <!-- background set -->
@@ -50,14 +62,15 @@
   <!-- logo-set -->
   <div class="" style="display: flex; align-items: center; margin: 1em 0 0 .5em; ">
     <label (click)="logoSpecs()">Logo image:
-      <fa-icon [icon]="editIcon" class="edit-icon" id="edit-logo" [ngStyle]="editLogoStyles()" (onClick)="logoSpecs()" data-toggle="tooltip" data-placement="top" title="Add logo image specs ">sdfsadfasdf </fa-icon>
+      <fa-icon [icon]="editIcon" class="edit-icon" id="edit-logo" [ngStyle]="editLogoStyles()" (onClick)="logoSpecs()" data-toggle="tooltip" data-placement="top" title="Logo image details">sdfsadfasdf </fa-icon>
     </label>
     <mat-checkbox
     required
     [checked]="true"
     name="first-name"
     value="first-value"
-    aria-label="First checkbox"
+    aria-label="logo checkbox"
+    title="Add/Remove Logo Image"
     [(ngModel)]= "isLogo"
     >
     </mat-checkbox>
@@ -66,7 +79,7 @@
   <div class="text-set" style="display: flex; align-items: center; margin-left: .5em;">
 
     <label for="showText" (click)="textSpecs()">Display Text:
-          <fa-icon [icon]="editIcon" class="edit-icon" (onClick)="textSpecs()" data-toggle="tooltip" data-placement="top" title="Add text specs "> </fa-icon>
+          <fa-icon [icon]="editIcon" class="edit-icon" (onClick)="textSpecs()" data-toggle="tooltip" data-placement="top" title="Description text details"> </fa-icon>
         </label>
     
     <mat-checkbox
@@ -74,7 +87,9 @@
     [checked]="true"
     name="first-name"
     value="first-value"
-    aria-label="First checkbox"
+    aria-label="text checkbox"
+    title="Add/Remove Description Text"
+
     [(ngModel)]= "isText"
     >
     </mat-checkbox>
@@ -155,72 +170,84 @@
 
           <label for="width">Width: </label>
           
-      </div><!-- end of logo details -->
+      </div><!-- end of form details -->
     </div><!-- end of Specs -->
   </div>
-  
-  
-  <!-- buttons -->
-  <div class="row" *ngFor="let button of landingPage.links; let indexOfelement=index ">
-    <div class="col" id={{indexOfelement}}>
-      {{indexOfelement}}
+    
+  <!-- links -->
+  <div class="row" *ngFor="let button of landingPage.links; let index=index ">
+    <div class="col" id={{index}}>
+      {{index}}
       <div class="venue-buttons" >
-        <!-- <a href={{landingPage.link.url}} > -->
-        <a href={{landingPage.link.url}} [ngStyle]="linkStyles()" >
+        <div class="arrows">
+          <fa-icon [icon]="arrowUp" class="arrow-up" (click)="moveLinkUp(index)" data-toggle="tooltip" data-placement="top" title="Move link upwards"> </fa-icon>
+          <fa-icon [icon]="arrowDown" class="arrow-down" (click)="moveLinkDown(index)" data-toggle="tooltip" data-placement="top" title="Move link downwards"> </fa-icon>
+        </div>
+    <!-- <a href={{landingPage.link.url}} > -->
+        <a href={{landingPage.links[index].url}} [ngStyle]="linkStyles(index)" >
           <!-- <button class="btn-undefined" > -->
-          <button class="btn-undefined" [ngStyle]="linkButtonStyles()">
+          <button class="btn-undefined" [ngStyle]="linkButtonStyles(index)">
             <i class="bi bi-undefined"></i>
-            <span>{{landingPage.link.button.text}}</span>
+            <span>{{landingPage.links[index].button.text}}</span>
           </button>
         </a>
         <div class="link-options">
-          <fa-icon [icon]="editIcon" class="edit-icon" (click)="linkSpecs()" data-toggle="tooltip" data-placement="top" title="Add link button specs "> </fa-icon>
-          <fa-icon [icon]="plusIcon" id="add-btn-icon" (click)="addButton() " data-toggle="tooltip" data-placement="top" title="Add another Link Button"> </fa-icon>
+          <fa-icon [icon]="editIcon" class="edit-icon" (click)="linkSpecs(index)" data-toggle="tooltip" data-placement="top" title="Link Button Details "> </fa-icon>
+          <fa-icon [icon]="plusIcon" id="add-btn-icon" (click)="addButton() " data-toggle="tooltip" data-placement="top" title="Create new Link Button"> </fa-icon>
         </div>
+
+        <!-- <fa-icon [icon]="closeIcon" class="close-icon"  style = "display: block;" (click)="closeLinkDetails()" data-toggle="tooltip" data-placement="top" title="Remove Link"> </fa-icon> -->
       </div><!--venue-buttons -->
-      <div *ngIf="isLinkSpecs">
+      <div *ngIf="isLinkSpecs[index]">
         <!-- <attribute-setter (newItemEvent)="setClose($event)" ></attribute-setter> -->
         <div class="form-details form-group col-6" style="margin: 1em auto;">
-          <fa-icon [icon]="closeIcon" class="close-icon"  style = "display: block;" (click)="closeLinkDetails()" data-toggle="tooltip" data-placement="top" title="Close Link Details"> </fa-icon>
+          
+          <fa-icon [icon]="closeIcon" class="close-icon"  style = "display: block;" (click)="closeLinkDetails(index)" data-toggle="tooltip" data-placement="top" title="Close Link Details"> </fa-icon>
+          
           <label for="url">Link Address: </label>
           <input
             type="url"
             class="form-control"
-            [(ngModel)]="landingPage.links[indexOfelement].url"
+            [(ngModel)]="landingPage.links[index].url"
             placeholder="https://www.myaddress.com/mylink"
           />
+          
           <label for="width">Content text: </label>
           <input
             type="text"
             class="form-control"
-            [(ngModel)]="landingPage.link.button.text"
+            [(ngModel)]="landingPage.links[index].button.text"
             placeholder="My Link"
           />
+          
           <label for="font color">Font Color: </label>
           <input
             type="text"
             class="form-control"
-            [(ngModel)]="landingPage.link.button.color"
+            [(ngModel)]="landingPage.links[index].button.color"
             placeholder="e.g. black or #000000 or rgb(0,0,0) or rgba(0,0,0, .5)"
           />            
-            <input type="color" id="font" name="head" [(ngModel)]="landingPage.link.button.color" value="#4fa0f0" placeholder="background color"><br>
+          <input type="color" id="font" name="head" [(ngModel)]="landingPage.links[index].button.color" value="#4fa0f0" placeholder="background color"><br>
 
           <label for="background_color">Background Color: </label>
           <input
             type="text"
             class="form-control"
-            [(ngModel)]="landingPage.link.button.bgColor"
+            [(ngModel)]="landingPage.links[index].button.bgColor"
             placeholder="e.g. black or #000000 or rgb(0,0,0, .5) or rgba(0,0,0, .5) " 
           />
-          <input type="color" id="font" name="head" [(ngModel)]="landingPage.link.button.bgColor" value="#4fa0f0" placeholder="background color"><br>
+          <input type="color" id="font" name="head" [(ngModel)]="landingPage.links[index].button.bgColor" value="#4fa0f0" placeholder="background color"><br>
+          
           <label for="width">Width: </label>
           <input
             type="text"
             class="form-control"
-            [(ngModel)] ="landingPage.link.width"
+            [(ngModel)] ="landingPage.links[index].width"
             placeholder="400px"
             />
-        </div><!-- end of logo details -->
+            <!-- <div ></div> -->
+            <delete-button [index]="index" [deleteItem]="'link'" [landingPage]="landingPage" style="margin: 1em;" ></delete-button>
+        </div><!-- end of form details -->
       </div><!-- end of Specs -->
     </div>
   </div>
