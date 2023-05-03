@@ -2,7 +2,7 @@
 import { Component, OnInit, } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 //fontawesome
-import { faEdit, faPlus, faWindowClose, faArrowUp, faArrowDown } from '@fortawesome/free-solid-svg-icons';
+import { faEdit,faMinus, faPlus, faWindowClose, faArrowUp, faArrowDown } from '@fortawesome/free-solid-svg-icons';
 // models
 import { LandingPage, Link} from '../../models/landingPage.model';
 // import { LinkCustom } from '../../models/landingPage.model';
@@ -21,16 +21,18 @@ export class LandingPageConverterComponent implements OnInit {
   
   // Variables
     //icons
-  closeIcon = faWindowClose;
+  minusIcon = faMinus;
   plusIcon = faPlus;
+  closeIcon = faWindowClose;
   editIcon = faEdit;
   arrowUp = faArrowUp;
   arrowDown = faArrowDown;
-    // form display booleans 
-  clickedLogo = true; 
+    // form display booleans
+  isSets = true; 
+  isFontSpecs = false;
+  isBgSpecs = false;
   isLogo = true;      
   isLogoSpecs = false;
-  clickedText= true; 
   isText= true;
   isTextSpecs = false;
 
@@ -88,14 +90,12 @@ export class LandingPageConverterComponent implements OnInit {
   };
   
   fonts: Font[]= fonts;
-  foods: Food[] = [
-    {value: 'steak-0', viewValue: 'Steak'},
-    {value: 'pizza-1', viewValue: 'Pizza'},
-    {value: 'tacos-2', viewValue: 'Tacos'},
-  ];
   
+  displaySets(){
+    this.isSets = !this.isSets;
+  }
   // Functions
-    // Language
+    // Language  
   hideLanguage(){
     console.log('hideLanguage')
     const language  = document.getElementsByClassName('language').item(0) as HTMLElement;
@@ -131,33 +131,6 @@ export class LandingPageConverterComponent implements OnInit {
   }
   
     // Font Face
-  displayFontForm(){
-    const close = document.getElementById('close-font');
-    const fontFaceForm = document.getElementById('font-face-form');
-    const fontEditIcon = document.getElementById('font-edit-icon');
-    if (fontFaceForm  !== null && close !== null && fontEditIcon !== null) {
-      fontFaceForm.style.display = 'flex';
-      fontFaceForm.style.flexDirection = 'column';
-      close.style.display = 'block';
-      close.style.alignSelf = 'flex-end';
-      fontEditIcon.style.display = 'none';
-    }
-  }
-  hideFontForm(){
-    const background = document.getElementById('font-face-form');
-    const close = document.getElementById('close-font');
-    const fontEditIcon = document.getElementById('font-edit-icon');
-    
-    // const plus = document.getElementById('plus-icon');
-// 
-    if (background !== null && close !== null && fontEditIcon !== null ) {
-      background.style.display = 'none';
-      close.style.display = 'none';
-      fontEditIcon.style.display = 'inline';
-      // plus.style.display = 'block';
-
-    }
-  }
 
     // Background Image
   bgStyles() {
@@ -165,29 +138,6 @@ export class LandingPageConverterComponent implements OnInit {
       'background-image': `url('${this.landingPage.background}')`,
       'background-size': 'cover'};
     return styles;
-  }
-  displayBgForm(){
-  const close = document.getElementById('close-bg');
-  const background = document.getElementById('background');
-  if (background !== null && close !== null) {
-    background.style.display = 'block';
-    close.style.alignSelf = 'flex-end';
-    close.style.display = 'inline';
-  }
-}    
-  hideBgForm(){
-    console.log('noneDisplay');
-    const background = document.getElementById('background');
-    const close = document.getElementById('close-bg');
-    
-    // const plus = document.getElementById('plus-icon');
-// 
-    if (background !== null && close !== null ) {
-      background.style.display = 'none';
-      close.style.display = 'none';
-      // plus.style.display = 'block';
-
-    }
   }
   
   // Logo
@@ -202,22 +152,7 @@ export class LandingPageConverterComponent implements OnInit {
       };
     }
     return styles;
-  }
-
-  logoSpecs() {
-    if (this.clickedLogo){
-      this.isLogoSpecs = true
-      this.clickedLogo = false; 
-    }else{
-      this.isLogoSpecs = false;
-      this.clickedLogo = true;
-    }  
-  }
-
-  closeLogoDetails() {
-    this.isLogoSpecs = false;
-  }
-
+  } 
   editLogoStyles(){
     const styles = {
       // 'margin-left': this.landingPage.logo.width,
@@ -237,20 +172,6 @@ export class LandingPageConverterComponent implements OnInit {
   };
     return styles;
   }
-  textSpecs() {
-    if (this.clickedText){
-      this.isTextSpecs = true
-      this.clickedText = false; 
-    }else{
-      this.isTextSpecs = false;
-      this.clickedText = true;
-    }  
-  
-  }
-  closeTextDetails() {
-    this.isTextSpecs = false;
-  }
-
     // Link
   linkStyles(index: number) {
     const styles = {
@@ -268,9 +189,7 @@ export class LandingPageConverterComponent implements OnInit {
   };
     return styles;
   }
-  linkSpecs(index:number) {
-  this.isLinkSpecs[index] = true;
-  }
+  
   closeLinkDetails(index:number) {
     this.isLinkSpecs[index] = false;
   }
@@ -310,10 +229,72 @@ export class LandingPageConverterComponent implements OnInit {
 constructor(public sanitizer: DomSanitizer,) { }
 
 ngOnInit(): void {
-  this.updatePreviewTemplate();
+  // this.updatePreviewTemplate();
+
 }
 
 // ==========not in use================
+
+linkSpecs(index:number) {
+  this.isLinkSpecs[index] = true;
+  }
+
+closeLogoDetails() {
+  this.isLogoSpecs = false;
+}
+
+displayBgForm(){
+  const close = document.getElementById('close-bg');
+  const background = document.getElementById('background');
+  if (background !== null && close !== null) {
+    background.style.display = 'block';
+    close.style.alignSelf = 'flex-end';
+    close.style.display = 'inline';
+  }
+}    
+  hideBgForm(){
+    console.log('noneDisplay');
+    const background = document.getElementById('background');
+    const close = document.getElementById('close-bg');
+    
+    // const plus = document.getElementById('plus-icon');
+// 
+    if (background !== null && close !== null ) {
+      background.style.display = 'none';
+      close.style.display = 'none';
+      // plus.style.display = 'block';
+
+    }
+  }
+
+displayFontForm(){
+  const close = document.getElementById('close-font');
+  const fontFaceForm = document.getElementById('font-face-form');
+  const fontEditIcon = document.getElementById('font-edit-icon');
+  if (fontFaceForm  !== null && close !== null && fontEditIcon !== null) {
+    fontFaceForm.style.display = 'flex';
+    fontFaceForm.style.flexDirection = 'column';
+    close.style.display = 'block';
+    close.style.alignSelf = 'flex-end';
+    fontEditIcon.style.display = 'none';
+  }
+}
+hideFontForm(){
+  const background = document.getElementById('font-face-form');
+  const close = document.getElementById('close-font');
+  const fontEditIcon = document.getElementById('font-edit-icon');
+  
+  // const plus = document.getElementById('plus-icon');
+// 
+  if (background !== null && close !== null && fontEditIcon !== null ) {
+    background.style.display = 'none';
+    close.style.display = 'none';
+    fontEditIcon.style.display = 'inline';
+    // plus.style.display = 'block';
+
+  }
+}
+
 fontStyles() {
   const styles = {'font-family': 'sans-serif',
   };

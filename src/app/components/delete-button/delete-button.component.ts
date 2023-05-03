@@ -9,6 +9,7 @@ export class DeleteButtonComponent {
   @Input() index: number = 0;
   @Input() deleteItem?: string;
   @Input() landingPage: any;
+  @Input() isLinkSpecs: any;
   delBtnPressed: boolean = false;
 
   
@@ -22,6 +23,6 @@ export class DeleteButtonComponent {
   delete(index: number){
     let links= this.landingPage.links;
     links.splice(index,1);
-    console.log(links);
+    this.isLinkSpecs.splice(index,1);
   }
 }
