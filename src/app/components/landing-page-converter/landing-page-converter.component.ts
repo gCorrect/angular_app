@@ -8,10 +8,7 @@ import { LandingPage, Link} from '../../models/landingPage.model';
 // import { LinkCustom } from '../../models/landingPage.model';
 import { fonts, Font } from 'src/app/models/fonts.model';
 
-interface Food {
-  value: string;
-  viewValue: string;
-}
+
 @Component({
   selector: 'app-landing-page-converter',
   templateUrl: './landing-page-converter.component.html',
@@ -44,21 +41,20 @@ export class LandingPageConverterComponent implements OnInit {
     id: 1,
     name: 'Landing Page 1',
     fontFace : {
-      // fontFamily: '',
-      fontFamily: 'sans-serif',
+      fontFamily: 'Arial',
       src: 'https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap',
     },
     background: 'https://www.i-host.gr/content/links/images/costanavarino/bg.jpg',
     logo: {
       url: 'https://www.i-host.gr/content/customers/img/aleria/logo.png',
-      width: '200px',
-      height: '200px',
+      width: '200',
+      height: '200',
       borderSize: '31px',
     },
     text: {
       content: '@myCompany',
       color: '#ffffff',
-      backgroundColor: '#000000d9',
+      bgColor: '#000000d9',
       padding: '20px',
       borderRadius: '5px',
     },
@@ -77,7 +73,7 @@ export class LandingPageConverterComponent implements OnInit {
     },
     links: [{
       url: 'https://www.aleria.gr/en/menu',
-      width: '400px',
+      width: '400',
       button:  {
         text: 'My Link1',
         color: '#ffffff',
@@ -91,16 +87,13 @@ export class LandingPageConverterComponent implements OnInit {
   
   fonts: Font[]= fonts;
   
-  displaySets(){
-    this.isSets = !this.isSets;
-  }
   // Functions
     // Language  
   hideLanguage(){
     console.log('hideLanguage')
     const language  = document.getElementsByClassName('language').item(0) as HTMLElement;
     const close = document.getElementById('close-lang');
-    const plus = document.getElementById('plus-icon');
+    const plus = document.getElementById('plus-icon-lang');
 
     if (language !== null && close !== null && plus !== null) {
       language.style.display = 'none';
@@ -112,7 +105,7 @@ export class LandingPageConverterComponent implements OnInit {
   displayLanguage(){
     console.log('displayLanguage')
     const language  = document.getElementsByClassName('language').item(0) as HTMLElement;
-    const plus = document.getElementById('plus-icon');
+    const plus = document.getElementById('plus-icon-lang');
     const close = document.getElementById('close-lang');
 
     if (language !== null && plus !== null && close !== null) {
@@ -130,7 +123,7 @@ export class LandingPageConverterComponent implements OnInit {
     return styles;
   }
   
-    // Font Face
+  // Font Face
 
     // Background Image
   bgStyles() {
@@ -139,44 +132,35 @@ export class LandingPageConverterComponent implements OnInit {
       'background-size': 'cover'};
     return styles;
   }
-  
   // Logo
   logoStyles() {
     let styles = {};
     if(this.landingPage.logo.url === ''){
       styles={'display': 'none'};
     }else{
-      styles = {'width': `${this.landingPage.logo.width}`,
-      'height': `${this.landingPage.logo.height}`,
+      styles = {'width': `${this.landingPage.logo.width}px`,
+      'height': `${this.landingPage.logo.height}px`,
       'background-image': `url('${this.landingPage.logo.url}')`,
       };
     }
     return styles;
   } 
-  editLogoStyles(){
-    const styles = {
-      // 'margin-left': this.landingPage.logo.width,
-      // 'margin-top': '5em',
-    };
-    return styles;
-  }
-
   //Text
   textStyles() {
     const styles = {
       'font-family': `${this.landingPage.fontFace.fontFamily}`,
       'color': `${this.landingPage.text.color}`,
-    'background-color': `${this.landingPage.text.backgroundColor}`,
+    'background-color': `${this.landingPage.text.bgColor}`,
     'padding': `${this.landingPage.text.padding}`,
     'border-radius': `${this.landingPage.text.borderRadius}`,
   };
     return styles;
   }
-    // Link
+  // Links
   linkStyles(index: number) {
     const styles = {
       'font-family': `${this.landingPage.fontFace.fontFamily}`,
-      'width': `${this.landingPage.links[index].width}`,
+      'width': `${this.landingPage.links[index].width}px`,
   };
     return styles;
   }
@@ -194,10 +178,9 @@ export class LandingPageConverterComponent implements OnInit {
     this.isLinkSpecs[index] = false;
   }
   addButton(){
-
     //console.log(this.name,this.empoloyeeID);
     let links= this.landingPage.links;
-    // let link: Link = {url: '', width: '', button: {text: '', color: '', bgColor: '', padding: '', borderRadius: ''}, fontFace: {fontFamily: ''}, text: {color: '', backgroundColor: '', padding: '', borderRadius: ''}, logo: {url: '', width: '', height: ''}, background: '}};
+    // let link: Link = {url: '', width: '', button: {text: '', color: '', bgColor: '', padding: '', borderRadius: ''}, fontFace: {fontFamily: ''}, text: {color: '', bgColor: '', padding: '', borderRadius: ''}, logo: {url: '', width: '', height: ''}, background: '}};
     let linkCustObj = new Link();
     linkCustObj.url= 'https://www.mylink.com';
     if(linkCustObj.button){
@@ -222,9 +205,7 @@ export class LandingPageConverterComponent implements OnInit {
     links[index] = links[index+1];
     links[index+1] = tempLink;
     console.log(links);
-  }
-
-  
+  }  
 
 constructor(public sanitizer: DomSanitizer,) { }
 
@@ -234,6 +215,10 @@ ngOnInit(): void {
 }
 
 // ==========not in use================
+
+displaySets(){
+  this.isSets = !this.isSets;
+}
 
 linkSpecs(index:number) {
   this.isLinkSpecs[index] = true;

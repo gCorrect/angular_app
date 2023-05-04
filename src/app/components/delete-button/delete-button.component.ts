@@ -11,18 +11,11 @@ export class DeleteButtonComponent {
   @Input() landingPage: any;
   @Input() isLinkSpecs: any;
   delBtnPressed: boolean = false;
-
   
-  deletePressed(): void {
-    this.delBtnPressed = true;
-  }
-  // confirm
-  cancel(): void {
-    this.delBtnPressed = false;
-  }
   delete(index: number){
     let links= this.landingPage.links;
     links.splice(index,1);
     this.isLinkSpecs.splice(index,1);
   }
+
 }

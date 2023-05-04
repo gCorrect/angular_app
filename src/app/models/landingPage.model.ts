@@ -15,7 +15,7 @@ export interface LandingPage {
   text: {
     content: string;
     color: string;
-    backgroundColor: string;
+    bgColor: string;
     padding: string;
     borderRadius: string;
   },

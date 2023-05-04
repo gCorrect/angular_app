@@ -26,6 +26,7 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatSelectModule} from '@angular/material/select'; 
 import { MatOptionModule } from '@angular/material/core';
 import { DeleteButtonComponent } from './components/delete-button/delete-button.component';
+import { RangeSliderComponent } from './components/range-slider/range-slider.component';
 @NgModule({
   imports: [
     BrowserModule,
@@ -51,6 +52,7 @@ import { DeleteButtonComponent } from './components/delete-button/delete-button.
     LandingPageConverterComponent,
     AttributeSetterComponent,
     DeleteButtonComponent,
+    RangeSliderComponent,
   ],
   providers: [UsersService],
   bootstrap: [AppComponent],

@@ -5,6 +5,7 @@
 	font-family: 'Futura', Helvetica, Arial, 'Heiti SC', 'Hiragino Sans GB';
 	// font-family: 'Raleway', sans-serif;
 	.landing-page{
+		padding: .5em;
 		// icons
 		.edit-icon{
 			display: inline;
@@ -18,7 +19,7 @@
 			}
 		}
 		.close-icon{
-			display: none;
+			display: block;
 			color: rgb(253, 95, 95);
 			margin: 0 0 .5em .5em;
 			align-self: flex-end;
@@ -29,13 +30,11 @@
 					z-index: 10;
 			}
 		}
-		#plus-icon{
-			position: absolute;
-			right: 20px;
+		.plus-icon{
 			color: rgb(168, 166, 166);
 			opacity: 0.5;
-			margin: 5px 0 0 5px;
-			padding: 0.2em;
+			// margin: 5px 0 0 5px;
+			// padding: 0.2em;
 			border: 2px solid rgb(168, 166, 166);
 			border-radius: .3em;
 			&:hover{
@@ -46,7 +45,11 @@
 				opacity: 1;
 			}
 		}
-		// 
+		#plus-icon-lang{
+			position: absolute;
+			right: 20px;
+		}
+		
 		.language{
 			display: none;
 			position: absolute;
