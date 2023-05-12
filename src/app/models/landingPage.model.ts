@@ -1,6 +1,18 @@
 export interface LandingPage {
   id: number;
   name: string;
+  language: string[];
+  languages: [
+    {
+      name: string;
+      code?: string;
+      text: string;
+      link: {
+        caption: string;
+        url: string;
+      }
+    }
+  ];
   logo: {
     url: string;
     width: string;
@@ -19,20 +31,11 @@ export interface LandingPage {
     padding: string;
     borderRadius: string;
   },
-  link: {
-    url: string;
-    width: string;
-    button:{
-      text: string;
-      color: string;
-      bgColor: string;
-      margin: string;
-      padding: string;
-      borderRadius: string;
-    },
-  };
   links: Array<Link>,
 }
+
+
+
 
 export class Link {
   url: string = '';
@@ -60,4 +63,5 @@ export class Button {
   margin: string = '';
   padding: string = '';
   borderRadius: string = '';
+  hoverBgColor: string = '';
 }
