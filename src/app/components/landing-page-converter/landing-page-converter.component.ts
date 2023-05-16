@@ -119,9 +119,9 @@ export class LandingPageConverterComponent implements OnInit{
       src: 'https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap',
     },
     // background: '',
-    background: '',
+    background: 'https://res.cloudinary.com/blue-plus-technologies-ltd/image/upload/f_auto,q_auto,dpr_auto,w_2050,c_limit/v1610373335/wmh0jyatqbfweupqgzxy.jpg',
     logo: {
-      url: 'https://www.i-host.gr/content/customers/img/aleria/logo.png',
+      url: 'https://res.cloudinary.com/blue-plus-technologies-ltd/image/upload/v1609790111/tkbwoo2z75yim69lndka.png',
       width: '200',
       height: '200',
       borderSize: '31px',
