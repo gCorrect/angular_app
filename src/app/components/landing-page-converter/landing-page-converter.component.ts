@@ -4,7 +4,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 //fontawesome
 import { faEdit,faMinus, faPlus, faWindowClose, faArrowUp, faArrowDown } from '@fortawesome/free-solid-svg-icons';
 // models
-import { LandingPage, Link} from '../../models/landingPage.model';
+import { LandingPage, Link, LinkInfo} from '../../models/landingPage.model';
 // import { LinkCustom } from '../../models/landingPage.model';
 import { fonts, Font } from 'src/app/models/fonts.model';
 import { languages, Language } from 'src/app/models/languages.model';
@@ -31,7 +31,8 @@ export class LandingPageConverterComponent implements OnInit{
   arrowDown = faArrowDown;
   // form display booleans
   allSpecsOpen= false;
-  isOtherLanguages = false;
+  isOtherLanguages = true;
+  defaultLanguageChanged =  true ;
   langSpecsOpen = false; 
   fontSpecsOpen = false;
   bgSpecsOpen = false;
@@ -49,22 +50,76 @@ export class LandingPageConverterComponent implements OnInit{
   landingPage: LandingPage = {
     id: 1,
     name: '',
-    language: [],
-    languages:[{
+    language: ['Greek', 'English'],
+    languages:[
+    {
       name: 'Greek',
       code: 'el',
       text: '@Το κατάστημά μου',
-      link: {
-        caption: 'Μενού',
-        url: 'https://www.aleria.gr/en/menu',
-      }
-    }],
+      links: [{
+        caption: 'Μενού1',
+        url: 'https://www.aleria.gr/el/menu1',
+        linkStyles: {
+          width : '400',
+          color: '#ffffff',
+          bgColor: '#9f9240',
+          margin: '15px auto',
+          padding: '10px 20px',
+          borderRadius: '5px',
+          hoverBgColor: 'gray',}
+      },
+      {
+        caption: 'Μενού2',
+        url: 'https://www.aleria.gr/el/menu2',
+        linkStyles: {
+          width : '400',
+          color: '#ffffff',
+          bgColor: '#9f9240',
+          margin: '15px auto',
+          padding: '10px 20px',
+          borderRadius: '5px',
+          hoverBgColor: 'gray',}
+      },
+      ]
+    },
+    {
+      name: 'English',
+      code: 'en',
+      text: '@My Company',
+      links: [
+      {
+        caption: 'Menu1',
+        url: 'https://www.aleria.gr/en/menu1',
+        linkStyles: {
+          width : '400',
+          color: '#ffffff',
+          bgColor: '#9f9240',
+          margin: '15px auto',
+          padding: '10px 20px',
+          borderRadius: '5px',
+          hoverBgColor: 'gray',}
+      },
+      {
+        caption: 'Menu2',
+        url: 'https://www.aleria.gr/en/menu2',
+        linkStyles: {
+          width : '400',
+          color: '#ffffff',
+          bgColor: '#9f9240',
+          margin: '15px auto',
+          padding: '10px 20px',
+          borderRadius: '5px',
+          hoverBgColor: 'gray',}
+      },
+      ]
+    },
+  ],
     fontFace : {
       fontFamily: 'Arial',
       src: 'https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap',
     },
     // background: '',
-    background: 'https://www.i-host.gr/content/links/images/costanavarino/bg.jpg',
+    background: '',
     logo: {
       url: 'https://www.i-host.gr/content/customers/img/aleria/logo.png',
       width: '200',
@@ -91,6 +146,7 @@ export class LandingPageConverterComponent implements OnInit{
         hoverBgColor: 'gray',
       }
     }],
+    
   };
   
   fonts: Font[] = fonts;
@@ -135,7 +191,7 @@ export class LandingPageConverterComponent implements OnInit{
       text-decoration: underline;
       box-shadow: none !important;
     }
-      .venue-logo {
+    .venue-logo {
       background-image: url('${this.landingPage.logo.url}');
       width: ${this.landingPage.logo.width}px;
       height: ${this.landingPage.logo.height}px;
@@ -145,9 +201,7 @@ export class LandingPageConverterComponent implements OnInit{
       margin: 50px auto;
       display: block;
       box-shadow: 0px 1px 2px 2px rgba(0, 0, 0,  0.27);
-
   }
-  
     body {
       font-family: ${this.landingPage.fontFace.fontFamily}, sans-serif;
       background-image: url('${this.landingPage.background}');  
@@ -161,45 +215,114 @@ export class LandingPageConverterComponent implements OnInit{
 
   createJs() {
     console.log('createJs');
-    let allLinksInfo = '';
-    let linkInfo = '';
-    for(let i=0; i<this.landingPage.links.length; i++){
-      let link = this.landingPage.links[i];
-      let linkSpecs = this.linkSpecsOpen[i];
-      let linkInfo = `
-      {
-        caption: {
-          en: "${link.button.text}",
-          el: "${link.button.text}"
-        },
-        link: "${link.url}",
-      },
-      `;
-      allLinksInfo += linkInfo;
+
+    let languages = this.landingPage.languages;
+    // text object string
+    let text : string | undefined = '' ;
+    for( let langIndex = 0 ; langIndex<languages.length; langIndex++){
+      let line = languages[langIndex].code?.concat(`: "${languages[langIndex].text}", \n`)
+      line +='\t\t'
+      console.log('each text line: \n' + line)
+
+      if (text!==undefined)
+      text += line;
+    }
+    console.log('text: \n' + text)
+
+    //link.caption object string
+    let caption : string | undefined = '' ;
+    let url : string | undefined = '' ;
+    let linksCaptions : string[] = [];
+    let linksURL : string[] = [];
+    for(let i=0; i<languages[0].links.length; i++){
+      caption = '';
+      url = '';
+      for( let langIndex = 0 ; langIndex<languages.length; langIndex++){
+        let lineCaption = languages[langIndex].code?.concat(`: "${languages[langIndex].links[i].caption}", \n`)
+        lineCaption +='\t\t\t'
+        let lineURL = `link`+languages[langIndex].code?.concat(`: "${languages[langIndex].links[i].url}", \n`)
+        lineURL+='\t\t\t'
+        
+        console.log('each text line: \n' + lineCaption)
+        console.log('each text line: \n' + lineURL)
+        if (caption!==undefined)
+        caption += lineCaption;
+
+        if (url!==undefined)
+        url += lineURL;
+      }
+      linksCaptions[i] = caption;
+      linksURL[i] = url;
     }
 
+    let linkInfo = '';
+    let allLinksInfo = '';
+    for(let i=0; i<languages[0].links.length; i++){
+
+      linkInfo = `
+  {
+    caption: {
+      ${linksCaptions[i]}
+    },
+      ${linksURL[i]}
+  },
+  `;
+        allLinksInfo += linkInfo;
+        
+      
+      
+      console.log(i + ' linksCaptions: \n' + linksCaptions[i])
+      console.log(i + ' linksURL: \n' + linksURL[i])
+      
+    }
+    console.log('linkInfo \n' + linkInfo)
+    console.log('allLinksInfo \n' + allLinksInfo)
+
+    // let allLinksInfo: string[] = [];
+    // let linkInfo = '';
+    // for(let i=0; i<languages[0].links.length; i++){
+    //   for( let langIndex = 0 ; langIndex<languages.length; langIndex++){
+    //     let language = languages[langIndex];
+
+    //     let link = this.landingPage.languages[langIndex].links[i];
+        
+    //     language.code?.concat(`: ${link.caption}`)
+        
+        
+    //     let linkInfo = `
+    //     {
+    //       caption: {
+    //         en: "${link.caption}",
+    //         el: "${link.caption}"
+    //       },
+    //       link: "${link.url}",
+    //     },
+    //     `;
+    //     allLinksInfo[langIndex] += linkInfo;
+    //   }
+    // }
+
+    // for( let langIndex = 0 ; langIndex<languages.length; langIndex++) {
+    //   languages[langIndex].code?.concat(`: ${languages[langIndex].links}`)
 
     let  jsText = `
+var __linksData = {
 
-    var __linksData = {
+  text: {
+    ${text}
+  },
+  
+  links: [
+    ${allLinksInfo}
+  ]
+};
 
-      text: {
-        en: "${this.landingPage.text.content}",
-        el: "${this.landingPage.text.content}"
-      },
-      
-      links: [
-        ${allLinksInfo}
-      ]
-    };
-
-    `;
+`;
 
     this.jsText = jsText;
-    console.log(this.jsText);
+    // console.log(this.jsText);
   } //createJs() End
 
-  
   createHtml() {
     console.log('createHtml');
 
@@ -413,9 +536,7 @@ body {
     this.htmlText = htmlText;
   } //createHtml() End
 
-
     // Language  
-  
   languageStyles() {
     const styles = {
       'font-family': `${this.landingPage.fontFace.fontFamily}`,
@@ -424,22 +545,37 @@ body {
   }
   
   // Language Adder
-  languageToPush: Language = {value: '', code: ''};
+  DefaultLanguageToUnshift: Language = {value: '', code: ''};
+  OtherLanguageToPush: Language = {value: '', code: ''};
   setDefaultLanguage(language: Language){
     if( !this.landingPage.language.includes(language.value) ){
       // this.landingPage.language.sort();
+      this.defaultLanguageChanged = false;
 
-      this.landingPage.language.unshift(language.value);
+      this.landingPage.language[0] = language.value;
 
-      this.landingPage.languages.unshift({
+      this.landingPage.languages[0] = 
+      {
         name: language.value,
         code: language.code,
         text: '@myCompany',
-        link: {
+        links: [{
           caption: 'My Link',
           url: 'https://www.mylink.com',
-        }
-      })
+          linkStyles: {
+            width : '400',
+            color: '#ffffff',
+            bgColor: '#9f9240',
+            margin: '15px auto',
+            padding: '10px 20px',
+            borderRadius: '5px',
+            hoverBgColor: 'gray',}
+        },
+        ]
+      };
+      this.defaultLanguageChanged = true;
+      console.log(this.landingPage.language);
+      console.log(this.landingPage.languages);
     }else{
       alert(`${language.value} already exists. Please, try again.`);
     }
@@ -448,22 +584,33 @@ body {
   }
   addLanguage(language: Language){
     this.isOtherLanguages = true;
-    //let languages = this.landingPage.language;
-    if( !this.landingPage.language.includes(language.value) ){
+    if(this.landingPage.language.includes(language.value) ){
+      alert(`${language.value} already exists. Please, try again.`);
+    }else if(language.value=='' ){
+      alert(`Sorry, no empty Language Field permitted.`);
+    }else{
       this.landingPage.language.push(language.value);
 
       this.landingPage.languages.push({
         name: language.value,
         code: language.code,
         text: '@myCompany',
-        link: {
+        links: [{
           caption: 'My Link',
           url: 'https://www.mylink.com',
-        }
+          linkStyles: {
+            width : '400',
+            color: '#ffffff',
+            bgColor: '#9f9240',
+            margin: '15px auto',
+            padding: '10px 20px',
+            borderRadius: '5px',
+            hoverBgColor: 'gray',}
+        },
+      ]
       })
-    }else{
-      alert(`${language.value} already exists. Please, try again.`);
     }
+
     // this.landingPage.lan guage.sort();
     console.log(this.landingPage.language);
 
@@ -489,18 +636,12 @@ body {
   selectedLanguage = 'Greek';
   langIndex: number = 0 ;
   selectedLang(language:string) {
-    console.log('selectedLanguage '+language);
     
     this.selectedLanguage = language;
 
     this.langIndex = this.landingPage.language.indexOf(language);
-    console.log('langIndex '+this.langIndex);
-    console.log('languages '+this.landingPage.languages[this.langIndex]);
-    console.log('languages '+this.landingPage.languages[this.langIndex].text);
-    
-  }
-  selectedLog(){
-    console.log('selectedLanguage : '+this.selectedLanguage);
+    console.log('langIndex : ' + this.langIndex)
+        
   }
   // Font Face
 
@@ -539,29 +680,60 @@ body {
   linkStyles(index: number) {
     const styles = {
       'font-family': `${this.landingPage.fontFace.fontFamily}`,
-      'width': `${this.landingPage.links[index].width}px`,
+      // 'width': `${this.landingPage.languages[this.langIndex].links[index].linkStyles.width}px`,
+      'width': `${this.landingPage.languages[this.langIndex].links[index].linkStyles.width}px`,
   };
     return styles;
   }
+
   linkButtonStyles(index: number) {
-    const styles = {
-      // `hover ? background-color: ${this.landingPage.links[index].button.hoverBgColor}  :
-      // 'background-color': `${this.landingPage.links[index].button.bgColor}`,
+    let linkStyles = this.landingPage.languages[this.langIndex].links[index].linkStyles; 
+    let styles = {};
+    if (this.hover) 
+      styles = {
+        // `${this.hover} ? {'background-color': ${this.landingPage.links[index].button.hoverBgColor} }: {'background-color': ${this.landingPage.links[index].button.bgColor}}`
+        'background-color': `${linkStyles.hoverBgColor}`,
+        'color': `${linkStyles.color}`,
+        'padding': `${linkStyles.padding}`,
+        'border-radius': `${linkStyles.borderRadius}`,
+    }
+    else{
+      styles = {
+        'background-color': `${linkStyles.bgColor}`,
+        'color': `${linkStyles.color}`,
+        'padding': `${linkStyles.padding}`,
+        'border-radius': `${linkStyles.borderRadius}`,
+      }
+    
+    }    
+    
+    
 
-      // hover ? 'background-color': `${this.landingPage.links[index].button.hoverBgColor}` :  
-      // 'background-color': `${this.landingPage.links[index].button.bgColor}`,
-      // 'color': `${this.landingPage.links[index].button.color}`,
-      // 'padding': `${this.landingPage.links[index].button.padding}`,
-      // 'border-radius': `${this.landingPage.links[index].button.borderRadius}`,
-  };
-
+  
   
     return styles;
   }
-  
+
+    
   closeLinkDetails(index:number) {
     this.linkSpecsOpen[index] = false;
   }
+  addLink(){
+    //console.log(this.name,this.empoloyeeID);
+    let links= this.landingPage.languages[this.langIndex].links;
+    // let link: Link = {url: '', width: '', button: {text: '', color: '', bgColor: '', padding: '', borderRadius: ''}, fontFace: {fontFamily: ''}, text: {color: '', bgColor: '', padding: '', borderRadius: ''}, logo: {url: '', width: '', height: ''}, background: '}};
+    let linkInfo = new LinkInfo();
+    let linkStyle = new Link();
+    linkInfo.url = 'https://www.mylink.com';
+    if(linkInfo){
+      linkInfo.caption = `My Link${this.indexLink}`;
+    }
+    links.push(linkInfo); 
+    this.indexLink++;
+    this.linkSpecsOpen.push(false);
+    console.log(links);
+  }
+
   addButton(){
     //console.log(this.name,this.empoloyeeID);
     let links= this.landingPage.links;
@@ -578,10 +750,18 @@ body {
   }
 
   moveLinkUp(index: number){
+    //rearrhange styles
     let links= this.landingPage.links;
     let tempLink = links[index];
     links[index] = links[index-1];
     links[index-1] = tempLink;
+
+    let linksInfo = this.landingPage.languages[this.langIndex].links;
+    let tempLinkInfo = linksInfo[index];
+    linksInfo[index] = linksInfo[index-1];  
+    linksInfo[index-1] = tempLinkInfo;  
+       
+    
     console.log(links);
   }
   moveLinkDown(index: number){
@@ -589,6 +769,11 @@ body {
     let tempLink = links[index];
     links[index] = links[index+1];
     links[index+1] = tempLink;
+
+    let linksInfo = this.landingPage.languages[this.langIndex].links;
+    let tempLinkInfo = linksInfo[index];
+    linksInfo[index] = linksInfo[index+1];  
+    linksInfo[index+1] = tempLinkInfo; 
     console.log(links);
   }  
 
@@ -597,6 +782,7 @@ body {
 // FONT SEARCH==========================
 ngOnInit(): void {
   this.getFontFamilyNames();
+  console.log( 'landIndex : ' +this.langIndex)
 }
 sampleFonts = ["Arial", "Arrial", "Arrriiaal"];
 
@@ -641,7 +827,9 @@ hideLanguage(){
     }
   }
 
-displaySets(){
+  
+
+  displaySets(){
 this.allSpecsOpen = !this.allSpecsOpen;
 }
 

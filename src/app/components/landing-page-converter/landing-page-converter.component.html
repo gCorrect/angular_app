@@ -39,11 +39,11 @@
   <div class="landing-page" [ngStyle]="bgStyles()">
  
   <!-- language -->
-  <div *ngIf="isOtherLanguages" class="language" [ngStyle]="languageStyles()">
+  <div *ngIf="isOtherLanguages && defaultLanguageChanged" class="language bg-info" [ngStyle]="languageStyles()">
     <!-- <fa-icon [icon]="closeIcon" class="close-icon" id="close-lang" (click)="isLanguage=false" title="Remove Language Selection "> </fa-icon> -->      
       <select class="form-control" title="language" name="language" id="lang-select"  (change) = "selectedLang($any($event.target).value)" >
         <!-- <option *ngFor="let language of landingPage.language" [ngValue]="language" (click)="selectedLang(language)" >{{language}}</option> -->
-        <option *ngFor="let language of landingPage.language" [ngValue]="language" (click)="selectedLog()" >{{language}}</option>
+        <option *ngFor="let language of landingPage.language" [ngValue]="language">{{language}}</option>
       </select>
   </div>
   <!-- <fa-icon *ngIf="!isLanguage" [icon]="plusIcon" class="plus-icon" id="plus-icon-lang" (click)="isLanguage=true" title="Add Language Selection "> </fa-icon> -->
@@ -76,11 +76,11 @@
         class="form-control"
         [(ngModel)]="landingPage.language[0]"
         placeholder="e.g. English">
-        <select class="form-select" aria-label="language list" [(ngModel)]="languageToPush" >
+        <select class="form-select" aria-label="language list" [(ngModel)]="DefaultLanguageToUnshift" >
           <option *ngFor="let language of languages" [ngValue]="language" style="background-color: beige;">{{language.value}} </option>
         </select>
-        <button (click)="setDefaultLanguage(languageToPush)">Add</button>
-        <button (click)="removeLanguage(languageToPush.value)" style="background-color: red;">Remove</button>
+        <button (click)="setDefaultLanguage(DefaultLanguageToUnshift)">Add</button>
+        <button (click)="removeLanguage(DefaultLanguageToUnshift.value)" style="background-color: red;">Remove</button>
 
         
         <label>
@@ -90,14 +90,14 @@
         type="text"
         class="form-control"
         id="language"
-        [(ngModel)]="languageToPush.value"
+        [(ngModel)]="OtherLanguageToPush.value"
         placeholder="e.g.French"
         />
-          <select class="form-select" aria-label="language list" [(ngModel)]="languageToPush" >
+          <select class="form-select" aria-label="language list" [(ngModel)]="OtherLanguageToPush" >
           <option *ngFor="let language of languages" [ngValue]="language" style="background-color: beige;">{{language.value}} </option>
         </select>
-        <button (click)="addLanguage(languageToPush)">Add</button>
-        <button (click)="removeLanguage(languageToPush.value)" style="background-color: red;">Remove</button>
+        <button (click)="addLanguage(OtherLanguageToPush)">Add</button>
+        <button (click)="removeLanguage(OtherLanguageToPush.value)" style="background-color: red;">Remove</button>
       </div>
     </div>
 
@@ -271,24 +271,27 @@
     </div><!-- end of Specs -->
   </div>
     
-  <!-- links -->
-  <div class="row" *ngFor="let button of landingPage.links; let index=index ">
+
+   <!-- links -->
+   <div class="row" *ngFor="let link of landingPage.languages[langIndex].links; let index=index ">
     <div class="col" id="button-link-{{index}}">
       <div class="venue-buttons" >
         <div class="arrows">
           <fa-icon [icon]="arrowUp" class="arrow-up" (click)="moveLinkUp(index)" title="Move link upwards"> </fa-icon>
           <fa-icon [icon]="arrowDown" class="arrow-down" (click)="moveLinkDown(index)" title="Move link downwards"> </fa-icon>
         </div>
-        <a href={{landingPage.links[index].url}} [ngStyle]="linkStyles(index)" >
-          <button class="btn-undefined" [ngStyle]="hover ? {'background-color': landingPage.links[index].button.hoverBgColor }: {'background-color': landingPage.links[index].button.bgColor}" (mouseover)="hover=true" (mouseleave)="hover=false">
-            <!-- <button class="btn-undefined" [ngStyle]="linkButtonStyles(index)" (mouseover)="hover=true" (mouseleave)="hover=false"> -->
-            <i class="bi bi-undefined"></i>
-            <span>{{landingPage.links[index].button.text}}</span>
+        <!-- <button class="btn-undefined" [ngStyle]="hover ? {'background-color': landingPage.links[index].button.hoverBgColor }: {'background-color': landingPage.links[index].button.bgColor}" (mouseover)="hover=true" (mouseleave)="hover=false"> -->
+
+          <a href={{link.url}}  [ngStyle] ="linkStyles(index)">
+            <button class="btn-undefined" [ngStyle]="linkButtonStyles(index)"  (mouseover)="hover=true" (mouseleave)="hover=false">
+              <i class="bi bi-undefined"></i>
+            <span>{{link.caption}}</span>
           </button>
         </a>
+
         <div class="link-options">
           <fa-icon [icon]="editIcon" class="edit-icon" (click)="linkSpecsOpen[index]=!linkSpecsOpen[index]" title="Link Button Details "> </fa-icon>
-          <fa-icon *ngIf="index == 0" [icon]="plusIcon" id="add-btn-icon" (click)="addButton() " title="Create new Link Button"> </fa-icon>
+          <fa-icon *ngIf="index == 0" [icon]="plusIcon" id="add-btn-icon" (click)="addLink() " title="Create new Link Button"> </fa-icon>
         </div>
 
       </div><!--venue-buttons -->
@@ -302,7 +305,113 @@
           <input
             type="url"
             class="form-control"
-            [(ngModel)]="landingPage.links[index].url"
+            [(ngModel)]="link.url"
+            placeholder="https://www.myaddress.com/mylink"
+          />
+          
+          <label for="caption">Content text: </label>
+          <input
+            type="text"
+            class="form-control"
+            [(ngModel)]="link.caption"
+            placeholder="My Link"
+          />
+          
+          <label for="font color">Font Color: </label>
+          <input
+            type="text"
+            class="form-control"
+            [(ngModel)]="link.linkStyles.color"
+            placeholder="e.g. black or #000000 or rgb(0,0,0) or rgba(0,0,0, .5)"
+          />            
+          <input type="color" id="font" name="head" [(ngModel)]="link.linkStyles.color" value="#4fa0f0" placeholder="background color"><br>
+
+          <label for="background_color">Background Color: </label>
+          <input
+            type="text"
+            class="form-control"
+            [(ngModel)]="link.linkStyles.bgColor"
+            placeholder="e.g. black or #000000 or rgb(0,0,0, .5) or rgba(0,0,0, .5) " 
+          />
+          <input type="color" id="btn-bg-color" name="head" [(ngModel)]="link.linkStyles.bgColor" value="#4fa0f0" placeholder="background color"><br>
+          
+          <label for="hover_background_color">Background Color on Hover: </label>
+          <input
+            type="text"
+            class="form-control"
+            [(ngModel)]="link.linkStyles.hoverBgColor"
+            placeholder="e.g. black or #000000 or rgb(0,0,0, .5) or rgba(0,0,0, .5) " 
+          />
+          <input type="color" id="hover-btn-bg-color" name="head" [(ngModel)]="link.linkStyles.hoverBgColor" value="#4fa0f0" placeholder="background color"><br>
+          
+          
+          <label for="width">Width: </label>
+          <input
+            type="text"
+            class="form-control"
+            [(ngModel)] ="link.linkStyles.width"
+            placeholder="400"
+            />
+          <input type="range" class="form-range" id="link-width" [(ngModel)]="link.linkStyles.width" min="0" max="2000" >
+
+            <delete-button [index]="index" [deleteItem]="link.caption" [landingPage]="landingPage" [linkSpecsOpen]="linkSpecsOpen " style="margin: 1em;" ></delete-button>
+        </div><!-- end of form details -->
+      </div><!-- end of Specs -->
+    </div>
+
+  <!-- links -->
+  <!-- <div class="row" *ngFor="let link of landingPage.languages[langIndex].links ; let index=index ">
+    <div class="col" id="button-link-{{index}}">
+      <div class="venue-buttons" >
+        <div class="arrows">
+          <fa-icon [icon]="arrowUp" class="arrow-up" (click)="moveLinkUp(index)" title="Move link upwards"> </fa-icon>
+          <fa-icon [icon]="arrowDown" class="arrow-down" (click)="moveLinkDown(index)" title="Move link downwards"> </fa-icon>
+        </div>
+          <a href={{link.url }} [ngStyle]="linkStyles(index)" >
+          <button class="btn-undefined" [ngStyle]="linkButtonStyles(index)" (mouseover)="hover=true" (mouseleave)="hover=false">
+            <i class="bi bi-undefined">
+              <span>{{link.caption}}</span>
+
+            </i>
+            <span> index:   {{index}} </span>
+
+          </button>
+        </a>
+        </div>
+        {{link.caption}} <br>
+        {{link.url}}
+    </div>
+  </div> -->
+
+  <!-- <div class="row" *ngFor="let button of landingPage.links ; let index=index ">
+    <div class="col" id="button-link-{{index}}">
+      <div class="venue-buttons" >
+        <div class="arrows">
+          <fa-icon [icon]="arrowUp" class="arrow-up" (click)="moveLinkUp(index)" title="Move link upwards"> </fa-icon>
+          <fa-icon [icon]="arrowDown" class="arrow-down" (click)="moveLinkDown(index)" title="Move link downwards"> </fa-icon>
+        </div>
+        <a href={{landingPage.languages[langIndex].links[index].url }} [ngStyle]="linkStyles(index)" >
+          <button class="btn-undefined" [ngStyle]="hover ? {'background-color': landingPage.links[index].button.hoverBgColor }: {'background-color': landingPage.links[index].button.bgColor}" (mouseover)="hover=true" (mouseleave)="hover=false">
+            <i class="bi bi-undefined"></i>
+            <span>{{landingPage.languages[langIndex].links[index].caption}}</span>
+          </button>
+        </a>
+        <div class="link-options">
+          <fa-icon [icon]="editIcon" class="edit-icon" (click)="linkSpecsOpen[index]=!linkSpecsOpen[index]" title="Link Button Details "> </fa-icon>
+          <fa-icon *ngIf="index == 0" [icon]="plusIcon" id="add-btn-icon" (click)="addButton() " title="Create new Link Button"> </fa-icon>
+        </div>
+
+      </div>
+      <div *ngIf="linkSpecsOpen[index]" class="link-specs">
+        <div class="form-details form-group col-6" style="margin: 1em auto;">
+          
+          <fa-icon [icon]="closeIcon" class="close-icon"  style = "display: block;" (click)="closeLinkDetails(index)" title="Close Link Details"> </fa-icon>
+          
+          <label for="url">Link Address: </label>
+          <input
+            type="url"
+            class="form-control"
+            [(ngModel)]="landingPage.languages[langIndex].links[index].url"
             placeholder="https://www.myaddress.com/mylink"
           />
           
@@ -310,7 +419,7 @@
           <input
             type="text"
             class="form-control"
-            [(ngModel)]="landingPage.links[index].button.text"
+            [(ngModel)]="landingPage.languages[langIndex].links[index].caption"
             placeholder="My Link"
           />
           
@@ -351,12 +460,13 @@
             />
           <input type="range" class="form-range" id="link-width" [(ngModel)]="landingPage.links[index].width" min="0" max="2000" >
 
-            <delete-button [index]="index" [deleteItem]="landingPage.links[index].button.text" [landingPage]="landingPage" [linkSpecsOpen]="linkSpecsOpen " style="margin: 1em;" ></delete-button>
-        </div><!-- end of form details -->
-      </div><!-- end of Specs -->
+            <delete-button [index]="index" [deleteItem]="landingPage.languages[langIndex].links[index].caption" [landingPage]="landingPage" [linkSpecsOpen]="linkSpecsOpen " style="margin: 1em;" ></delete-button>
+        </div>
+      </div>
     </div>
-  </div>
+  </div> -->
 
+  
 <!-- text below  -->
 <!-- <div class="row">
   <div class="col text-container">

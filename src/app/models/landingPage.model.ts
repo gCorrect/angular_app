@@ -2,17 +2,7 @@ export interface LandingPage {
   id: number;
   name: string;
   language: string[];
-  languages: [
-    {
-      name: string;
-      code?: string;
-      text: string;
-      link: {
-        caption: string;
-        url: string;
-      }
-    }
-  ];
+  languages: Array<InfoPerLanguage>;
   logo: {
     url: string;
     width: string;
@@ -35,7 +25,12 @@ export interface LandingPage {
 }
 
 
-
+export class InfoPerLanguage {
+  name: string = '';
+  code?: string = '';
+  text: string = '';
+  links: Array<LinkInfo> = [];
+}
 
 export class Link {
   url: string = '';
@@ -43,21 +38,24 @@ export class Link {
   button: Button = new Button();
 }
 
-// export interface Link{
-//   url: string;
-//     width: string;
-//     button:{
-//       text: string;
-//       color: string;
-//       bgColor: string;
-//       margin: string;
-//       padding: string;
-//       borderRadius: string;
-//     }
-// }
-
 export class Button {
   text: string = '';
+  color: string   = '';
+  bgColor: string = '';
+  margin: string = '';
+  padding: string = '';
+  borderRadius: string = '';
+  hoverBgColor: string = '';
+}
+
+export class LinkInfo{
+  caption: string = '' ;  
+  url: string = '';
+  linkStyles: LinkStyles = new LinkStyles(); 
+}
+
+export class LinkStyles {
+  width: string = '';
   color: string   = '';
   bgColor: string = '';
   margin: string = '';
