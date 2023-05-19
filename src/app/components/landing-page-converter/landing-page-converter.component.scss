@@ -29,7 +29,6 @@
 		.plus-icon, .minus-icon{
 			cursor: pointer;
 			color: rgb(169, 168, 168);
-
 		}
 		
 		.language{
@@ -54,34 +53,31 @@
 					color: black;
 				}
 			}
+		}
 		
-			.sets{				
-				
-				.language-set{
-					margin-left: .5em;
-					.language-specs{
-							margin: .5em;
-						button{
-							background-color: aquamarine;
-						}
+		.sets{				
+			.language-set{
+				.language-specs{
+					button{
 					}
 				}
-		
-				.font-face-set{
-					margin-left: .5em;
-					#font-face-form{
-							// display: none;
-							margin: .5em;
-					}
-				}
-				.bg-img-set{
-					margin-left: .5em;
-					#bg-form{
+			}
+	
+			.font-face-set{
+				// margin-left: .5em;
+				#font-face-form{
 						// display: none;
-							margin: .5em;
-					}
-				} 		
-			}		
+						// margin: .5em;
+				}
+			}
+			.bg-img-set{
+				// margin-left: .5em;
+				#bg-form{
+					// display: none;
+						// margin: .5em;
+				}
+			} 		
+		}		
 		}
 
 		.hasCheckBox{
@@ -106,6 +102,7 @@
 			}
 			.venue-logo{
 				background-repeat: no-repeat;
+				background-position: center;
 				background-color: white;
 				border-radius: 15px;
 				// border: 31px solid white;
@@ -132,15 +129,15 @@
 			}
 		}
 		.close-icon{
-			display: block;
+			// display: inline;
 			color: rgb(253, 95, 95);
-			margin: 0 0 .5em .5em;
+			// margin: 0 0 .5em .5em;
 			align-self: flex-end;
 			opacity: 0.5;
 			&:hover{
 					cursor: pointer;
 					opacity: 1;
-					z-index: 10;
+					// z-index: 10;
 			}
 		}
 		
@@ -152,7 +149,6 @@
 	
 	}//landing-page
 	
-}//host
 
 .text-container {
     display: flex;
@@ -211,7 +207,7 @@
     color: #ffffff;
   }
   .venue-buttons button:hover {
-    // background-color: #b3a54e!important;
+    // background-color: red!important;
   }
   .venue-buttons .arrows {
 	display: flex;
@@ -249,8 +245,6 @@
 	color: rgb(171, 180, 177);
 	font-style: italic;
 }
-
-
 
 
 

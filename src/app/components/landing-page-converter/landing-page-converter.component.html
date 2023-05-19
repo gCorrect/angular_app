@@ -6,7 +6,7 @@
           class="form-control w-25"
           id="name"
           [(ngModel)]="landingPage.name"
-          placeholder="Store Name"
+          placeholder="Company Name"
           title="Required for download"
           />
   <div id="exports">
@@ -36,18 +36,18 @@
   </div>
 </div>
 
-  <div class="landing-page" [ngStyle]="bgStyles()">
+<div class="landing-page" [ngStyle]="bgStyles()">
  
   <!-- language -->
-  <div *ngIf="isOtherLanguages && defaultLanguageChanged" class="language bg-info" [ngStyle]="languageStyles()">
-    <!-- <fa-icon [icon]="closeIcon" class="close-icon" id="close-lang" (click)="isLanguage=false" title="Remove Language Selection "> </fa-icon> -->      
-      <select class="form-control" title="language" name="language" id="lang-select"  (change) = "selectedLang($any($event.target).value)" >
-        <!-- <option *ngFor="let language of landingPage.language" [ngValue]="language" (click)="selectedLang(language)" >{{language}}</option> -->
-        <option *ngFor="let language of landingPage.language" [ngValue]="language">{{language}}</option>
-      </select>
-  </div>
-  <!-- <fa-icon *ngIf="!isLanguage" [icon]="plusIcon" class="plus-icon" id="plus-icon-lang" (click)="isLanguage=true" title="Add Language Selection "> </fa-icon> -->
-
+  <div *ngIf="isOtherLanguages" class="language  " [ngStyle]="languageStyles()">
+    <fa-icon *ngIf="!isOtherLanguages" [icon]="plusIcon" class="plus-icon" id="plus-icon-lang" (click)="isOtherLanguages=true" title="Add Language Selection "> </fa-icon>
+    <select class="form-control" title="language" name="language" id="lang-select"  (change) = "selectedLang($any($event.target).value)" >
+      <option *ngFor="let language of landingPage.language" [ngValue]="language" (click)="selectedLang(language)" >{{language}}</option>
+      <!-- <option *ngFor="let language of landingPage.language" [ngValue]="language">{{language}}</option> -->
+      
+    </select>
+    <!-- <fa-icon [icon]="closeIcon" class="close-icon" id="close-lang" (click)="isOtherLanguages=false" title="Remove Language Selection "> </fa-icon>       -->
+    </div>
   
   <!-- Specs Forms -->
   <!-- <button class="show-hide" (click)="allSpecsOpen=!allSpecsOpen"> -->
@@ -72,32 +72,46 @@
         <label>
           Default language:
         </label>        
-        <input type="text"
+        <!-- <input type="text"
         class="form-control"
         [(ngModel)]="landingPage.language[0]"
-        placeholder="e.g. English">
+        placeholder="e.g. English"> -->
         <select class="form-select" aria-label="language list" [(ngModel)]="DefaultLanguageToUnshift" >
           <option *ngFor="let language of languages" [ngValue]="language" style="background-color: beige;">{{language.value}} </option>
         </select>
-        <button (click)="setDefaultLanguage(DefaultLanguageToUnshift)">Add</button>
-        <button (click)="removeLanguage(DefaultLanguageToUnshift.value)" style="background-color: red;">Remove</button>
+        <div class="buttons">
+          <button (click)="removeDefaultLanguage()" class="bg-danger w-25">Remove</button>
+          <button (click)="setDefaultLanguage(DefaultLanguageToUnshift)" class="bg-success w-25" style="align-self: flex-end;">Add</button>
+        </div>
 
         
-        <label>
-          Add other languages:
+        <label style="display: flex; align-items: center;">
+          Add other languages: 
+          <mat-checkbox
+          required
+          [checked]="true"
+          name="first-name"
+          value="first-value"
+          [(ngModel)] = "isOtherLanguages"
+          aria-label="logo checkbox"
+          title="Add/Remove Logo Image"
+          >
+      </mat-checkbox>
         </label>
-        <input
+        <!-- <input
         type="text"
         class="form-control"
         id="language"
         [(ngModel)]="OtherLanguageToPush.value"
         placeholder="e.g.French"
-        />
+        /> -->
           <select class="form-select" aria-label="language list" [(ngModel)]="OtherLanguageToPush" >
           <option *ngFor="let language of languages" [ngValue]="language" style="background-color: beige;">{{language.value}} </option>
         </select>
-        <button (click)="addLanguage(OtherLanguageToPush)">Add</button>
-        <button (click)="removeLanguage(OtherLanguageToPush.value)" style="background-color: red;">Remove</button>
+        <div class="buttons">
+          <button (click)="removeLanguage(OtherLanguageToPush.value)" class="bg-danger w-25" style="background-color: red; width:20em;">Remove</button>
+          <button (click)="addLanguage(OtherLanguageToPush)"  class="bg-success w-25">Add</button>
+        </div>
       </div>
     </div>
 
@@ -151,6 +165,7 @@
       [checked]="true"
       name="first-name"
       value="first-value"
+      (change) = "addRemoveLogo()"
       aria-label="logo checkbox"
       title="Add/Remove Logo Image"
       [(ngModel)]= "isLogo"
@@ -169,9 +184,9 @@
       [checked]="true"
       name="first-name"
       value="first-value"
+      (change) = "addRemoveText()"
       aria-label="text checkbox"
       title="Add/Remove Description Text"
-
       [(ngModel)]= "isText"
       >
       </mat-checkbox>
@@ -232,7 +247,7 @@
         
         <fa-icon [icon]="closeIcon" class="close-icon" style = "display: block;" (click)="textSpecsOpen=!textSpecsOpen" title="Close Logo Details"> </fa-icon>
         
-        <label for="display">Display Text: <br> ( If no Description text: 1. Empty "Text Content" field 2. Set "padding = 0" )</label>  
+        <label for="display">Display Text: </label>  
         <label for="text">Text Content: </label>
           <textarea
             type="text"
@@ -281,13 +296,13 @@
           <fa-icon [icon]="arrowDown" class="arrow-down" (click)="moveLinkDown(index)" title="Move link downwards"> </fa-icon>
         </div>
         <!-- <button class="btn-undefined" [ngStyle]="hover ? {'background-color': landingPage.links[index].button.hoverBgColor }: {'background-color': landingPage.links[index].button.bgColor}" (mouseover)="hover=true" (mouseleave)="hover=false"> -->
-
-          <a href={{link.url}}  [ngStyle] ="linkStyles(index)">
-            <button class="btn-undefined" [ngStyle]="linkButtonStyles(index)"  (mouseover)="hover=true" (mouseleave)="hover=false">
-              <i class="bi bi-undefined"></i>
-            <span>{{link.caption}}</span>
-          </button>
-        </a>
+              <a href={{link.url}}  [ngStyle] ="linkStyles(index)">
+                <button class="btn-undefined" [ngStyle]="linkButtonStyles(index)"  (mouseenter)="hover=true" (mouseleave)="hover=false">
+                    <!-- <button class="btn-undefined" [ngStyle]="linkButtonStyles(index)"  (mouseover)="hovered=index" (mouseout)="hovered=-1"> -->
+                  <i class="bi bi-undefined"></i>
+                  <span>{{link.caption}}</span>
+                </button>
+              </a>         
 
         <div class="link-options">
           <fa-icon [icon]="editIcon" class="edit-icon" (click)="linkSpecsOpen[index]=!linkSpecsOpen[index]" title="Link Button Details "> </fa-icon>
@@ -354,7 +369,7 @@
             />
           <input type="range" class="form-range" id="link-width" [(ngModel)]="link.linkStyles.width" min="0" max="2000" >
 
-            <delete-button [index]="index" [deleteItem]="link.caption" [landingPage]="landingPage" [linkSpecsOpen]="linkSpecsOpen " style="margin: 1em;" ></delete-button>
+            <delete-button [index]="index" [deleteItem]="link.caption" [languages]="landingPage.languages" [linkSpecsOpen]="linkSpecsOpen " style="margin: 1em;" ></delete-button>
         </div><!-- end of form details -->
       </div><!-- end of Specs -->
     </div>
@@ -477,4 +492,5 @@
 <!-- <div style= "margin: 2em;" [innerHTML]="sanitizer.bypassSecurityTrustHtml(previewTemplate)"></div> -->
 
 
-</div> <!-- end of landing-page -->
+  </div> <!-- end of landing-page -->
+</div>
